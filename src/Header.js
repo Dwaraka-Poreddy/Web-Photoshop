@@ -17,14 +17,15 @@ import TextDisplay from "./TextDisplay";
 import ImgDisplay from "./ImgDisplay";
 import Draggable from "react-draggable";
 import InputColor, { Color } from "react-input-color";
-import FontPicker from "./FontPicker";
-
+import Slider from "@material-ui/core/Slider";
+import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
 //imports for leftbar
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import InputBase from "@material-ui/core/InputBase";
 ///
 // imports of workspace
 ///
@@ -37,6 +38,10 @@ import BorderClearIcon from "@material-ui/icons/BorderClear";
 import ColorizeIcon from "@material-ui/icons/Colorize";
 import DeleteForever from "@material-ui/icons/DeleteForever";
 ///
+/////
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 //imports fro RightBar2
 import CreateIcon from "@material-ui/icons/Create";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -63,6 +68,16 @@ import { saveAs } from "file-saver";
 /// content related to RightSidebar2
 import Button from "@material-ui/core/Button";
 import uuid from "react-uuid";
+
+const useFFamStyles = makeStyles((theme) => ({
+  formControl: {
+    // margin: theme.spacing(1),
+    minWidth: 300
+  },
+  selectEmpty: {
+    // marginTop: theme.spacing(2)
+  }
+}));
 
 const secuseStyles = makeStyles((theme) => ({
   root: {
@@ -159,12 +174,13 @@ const RBar2useStyles = makeStyles((RBar2theme) => ({
 }));
 
 const initialState = {
-  ffamily: "",
+  fontFamily: "Font Family",
   isdisplay: true,
   title: "SampleText",
   isBold: false,
   isItalic: false,
   isUnderLine: false,
+  fontSize: "24",
   color: {},
   backgroundColor: {},
   outlineColor: {},
@@ -173,14 +189,20 @@ const initialState = {
 
 const imginitState = {
   isImgdisplay: true,
+  opacity: "1",
+  width: "0",
   ImgSource: "https://static.toiimg.com/photo/72975551.cms",
-  bordCol: "{}"
+  borderColor: "transparent",
+  borderRadius: "0",
+  blur: "0",
+  contrast: "1",
+  grayscale: "0",
+  invert: "0"
 };
 
 function Header() {
   const data = Response;
-  const [ffamily, setFfamily] = useState("");
-  const [fFname, setfFname] = useState("FontName");
+  const [fontFamily, setFfamily] = useState("Font Family");
   const [isdisplay, setisDisplay] = useState("inline-block");
   const [color, setColor] = useState({});
   const [isBold, setIsBold] = useState(false);
@@ -188,15 +210,21 @@ function Header() {
   const [isItalic, setIsItalic] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState({});
   const [outlineColor, setOutlineColor] = useState({});
+  const [fontSize, setFSize] = useState("24");
   const [alignment, setAlignment] = useState("justify");
   /////related to secondary image, separete js file
   const [secImgId, setSecImgId] = useState(0);
   const [secImgEditId, setSecImgEditId] = useState("");
-  const [bordCol, setBordCol] = useState({});
+  const [borderColor, setBordCol] = useState("transparent");
+  const [opacity, setImgOpacity] = useState("1");
   const [isImgdisplay, setIsImgdisplay] = useState(true);
-  const [ImgSource, setImgSource] = useState(
-    "https://static.toiimg.com/photo/72975551.cms"
-  );
+  const [ImgSource, setImgSource] = useState();
+  const [borderRadius, setImgborderRadius] = useState("0");
+  const [blur, setImgBlur] = useState("0");
+  const [contrast, setImgContrast] = useState("1");
+  const [grayscale, setImgGrayscale] = useState("0");
+  const [invert, setImgInvert] = useState("0");
+  const [width, setImgWidth] = useState("0");
   ///related to rightsidebae2
   const RBar2classes = RBar2useStyles();
   const RBar2theme = useTheme();
@@ -213,11 +241,17 @@ function Header() {
   const [secImgElement, setSecImgElement] = useState(imginitState);
 
   const [fileName, setFileName] = React.useState("");
-  const [id, setId] = useState("");
-  const [imageid, setImageId] = useState("");
+  const [id, setId] = useState(0);
+  const [imageid, setImageId] = useState(0);
   const [activeImage, setActiveImage] = React.useState(
     "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
   );
+
+  const FFamclasses = useFFamStyles();
+  // const handleFFamChange = (event) => {
+  //   setFfamily(event.target.value);
+  // };
+
   const secclasses = secuseStyles();
   const classesinput = useStylesinput();
   function handleMemeDownlod(el) {
@@ -313,14 +347,7 @@ function Header() {
             <p className="header__leftStepper">Horizantal Stepper</p>
           </div>
 
-          <p
-            onClick={() => {
-              console.log("1", fFname);
-            }}
-            style={{ fontFamily: fFname }}
-          >
-            GiftCard Generator
-          </p>
+          <p>GiftCard Generator</p>
           <div style={{ display: "flex" }} className="header__right">
             <TextField
               className={classesinput.root}
@@ -504,7 +531,7 @@ function Header() {
             <CssBaseline />
             <Container fixed>
               <Typography
-                id="workingSpace"
+                // id="workingSpace"
                 component="div"
                 style={{
                   backgroundColor: "#cfe8fc",
@@ -512,6 +539,7 @@ function Header() {
                 }}
               >
                 <div
+                  id="workingSpace"
                   onClick={() => {
                     // console.log("clicked");
                     // setShowText(true);
@@ -529,9 +557,11 @@ function Header() {
                   <img
                     style={{
                       position: "absolute",
-                      left: "0",
-                      top: "0",
+                      // top: "50%",
+                      left: "50%",
                       width: "100%",
+                      transform: "translate(-50%)",
+                      // maxHeight: "80vh",
                       zIndex: "0"
                       // overflowX: "auto"
                     }}
@@ -572,34 +602,257 @@ function Header() {
                         index={0}
                         dir={RBar2theme.direction}
                       >
-                        <div className="RightSideBar2__Btn">
+                        {/* <div className="RightSideBar2__Btn">
                           <CreateIcon className="RightSideBar2__Btn__icon" />
                           <h2 className="RightSideBar2__Btn__title">
                             {" "}
                             &nbsp;Edit Text{" "}
                           </h2>{" "}
-                        </div>
+                        </div> */}
                         <p className="RightSideBar2__Text">FONT</p>
-                        <div
-                          onClick={() => {
-                            setFfamily(ffamily);
-                            // console.log("underline clicked", color);
-                            const sheeps = textelements;
-                            sheeps[id] = {
-                              ...sheeps[id],
-                              ffamily: sheeps[id].ffamily
-                            };
-                            settextelements(textelements);
-                            // console.log(alignment);
-                          }}
-                        >
-                          <FontPicker setfFname={setfFname} />
+                        <div>
+                          <div>
+                            <FormControl className={FFamclasses.formControl}>
+                              <Select
+                                style={{
+                                  fontFamily: fontFamily,
+                                  // fontFamily: textelements[id].fontFamily,
+                                  color: "#fff"
+                                }}
+                                value={fontFamily}
+                                // value={textelements[id].fontFamily}
+                                onChange={(e) => {
+                                  setFfamily(e.target.value);
+                                  const sheeps = textelements;
+                                  sheeps[id] = {
+                                    ...sheeps[id],
+                                    fontFamily: e.target.value
+                                  };
+                                  settextelements(textelements);
+                                }}
+                                displayEmpty
+                                className={FFamclasses.selectEmpty}
+                                inputProps={{ "aria-label": "Without label" }}
+                              >
+                                <MenuItem value="Font Family">
+                                  <em>Font Family</em>
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Abel" }}
+                                  value={"Abel"}
+                                >
+                                  Abel
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Akronim" }}
+                                  value={"Akronim"}
+                                >
+                                  Alex Brush
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Alex Brush" }}
+                                  value={"Alex Brush"}
+                                >
+                                  Akronim
+                                </MenuItem>
+
+                                <MenuItem
+                                  style={{ fontFamily: "Allura" }}
+                                  value={"Allura"}
+                                >
+                                  Allura
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Almendra Display" }}
+                                  value={"Almendra Display"}
+                                >
+                                  Almendra Display
+                                </MenuItem>
+                                <MenuItem
+                                  style={{
+                                    fontFamily: "Annie Use Your Telescope"
+                                  }}
+                                  value={"Annie Use Your Telescope"}
+                                >
+                                  Annie Use Your Telescope
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Arizonia" }}
+                                  value={"Arizonia"}
+                                >
+                                  Arizonia
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Astloch" }}
+                                  value={"Astloch"}
+                                >
+                                  Astloch
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Atomic Age" }}
+                                  value={"Atomic Age"}
+                                >
+                                  Atomic Age
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Barriecito" }}
+                                  value={"Barriecito"}
+                                >
+                                  Barriecito
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Barrio" }}
+                                  value={"Barrio"}
+                                >
+                                  Barrio
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Berkshire Swash" }}
+                                  value={"Berkshire Swash"}
+                                >
+                                  Berkshire Swash
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Beth Ellen" }}
+                                  value={"Beth Ellen"}
+                                >
+                                  Beth Ellen
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Bigelow Rules" }}
+                                  value={"Bigelow Rules"}
+                                >
+                                  Bigelow Rules
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Bonbon" }}
+                                  value={"Bonbon"}
+                                >
+                                  Bonbon
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Bungee Outline" }}
+                                  value={"Bungee Outline"}
+                                >
+                                  Bungee Outline
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Bungee Shade" }}
+                                  value={"Bungee Shade"}
+                                >
+                                  Bungee Shade
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Butcherman" }}
+                                  value={"Butcherman"}
+                                >
+                                  Butcherman
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Butterfly Kids" }}
+                                  value={"Butterfly Kids"}
+                                >
+                                  Butterfly Kids
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Calligraffitti" }}
+                                  value={"Calligraffitti"}
+                                >
+                                  Calligraffitti
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Caveat" }}
+                                  value={"Caveat"}
+                                >
+                                  Caveat
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Clicker Script" }}
+                                  value={"Clicker Script"}
+                                >
+                                  Clicker Script
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Codystar" }}
+                                  value={"Codystar"}
+                                >
+                                  Codystar
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Condiment" }}
+                                  value={"Condiment"}
+                                >
+                                  Condiment
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Creepster" }}
+                                  value={"Creepster"}
+                                >
+                                  Creepster
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Dawning of a New Day" }}
+                                  value={"Dawning of a New Day"}
+                                >
+                                  Dawning of a New Day
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Eater" }}
+                                  value={"Eater"}
+                                >
+                                  Eater
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Engagement" }}
+                                  value={"Engagement"}
+                                >
+                                  Engagement
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Ewert" }}
+                                  value={"Ewert"}
+                                >
+                                  Ewert
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Faster One" }}
+                                  value={"Faster One"}
+                                >
+                                  Faster One
+                                </MenuItem>
+                                <MenuItem
+                                  style={{ fontFamily: "Finger Paint" }}
+                                  value={"Finger Paint"}
+                                >
+                                  Finger Paint
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          </div>
                         </div>
 
                         <div style={{ display: "flex" }}>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title"> 47 </h2>{" "}
-                            <ExpandMoreIcon className="RightSideBar2__Btn__icon" />
+                          <div
+                            className="RightSideBar2__Btn"
+                            style={{ width: "50%" }}
+                          >
+                            <InputBase
+                              size="small"
+                              placeholder="Font Size"
+                              type="number"
+                              value={fontSize}
+                              // value={textelements[id].fontSize}
+                              style={{ color: "#fff" }}
+                              onChange={(e) => {
+                                setFSize(e.target.value);
+                                const sheeps = textelements;
+                                sheeps[id] = {
+                                  ...sheeps[id],
+                                  fontSize: e.target.value
+                                };
+                                settextelements(textelements);
+                              }}
+                            />
                           </div>
                           <div className="RightSideBar2__Btn">
                             <AspectRatioIcon className="RightSideBar2__Btn__icon" />
@@ -858,14 +1111,14 @@ function Header() {
                         <input
                           type="color"
                           id="ImgBorderColor"
-                          initialValue="null"
+                          // initialValue="transparent"
                           value={color.hex}
                           onChange={(e) => {
                             setBordCol(e.target.value);
                             const goats = secImgElements;
                             goats[secImgEditId] = {
                               ...goats[secImgEditId],
-                              bordCol: e.target.value
+                              borderColor: e.target.value
                             };
                             setSecImgElements(secImgElements);
                           }}
@@ -890,7 +1143,194 @@ function Header() {
                             </h2>{" "}
                           </div>
                         </label>
-                        <p className="RightSideBar2__Text">EFFECT</p>
+                        <Typography
+                          id="continuous-slider-Width"
+                          className="RightSideBar2__Text"
+                          gutterBottom
+                        >
+                          Width
+                        </Typography>
+                        {/* {JSON.stringify(width)} */}
+                        <div style={{ width: "90%", marginLeft: "12px" }}>
+                          <Grid container spacing={2}>
+                            <Grid item xs>
+                              <Slider
+                                value={width / 10}
+                                onChange={(e, v) => {
+                                  setImgWidth(v * 10);
+                                  const goats = secImgElements;
+                                  goats[secImgEditId] = {
+                                    ...goats[secImgEditId],
+                                    width: v * 10
+                                  };
+                                  setSecImgElements(secImgElements);
+                                }}
+                                aria-labelledby="continuous-slider-Width"
+                              />
+                            </Grid>
+                          </Grid>
+                        </div>
+                        <Typography
+                          id="continuous-slider-opacity"
+                          className="RightSideBar2__Text"
+                          gutterBottom
+                        >
+                          Opacity
+                        </Typography>
+                        <div style={{ width: "90%", marginLeft: "12px" }}>
+                          <Grid container spacing={2}>
+                            <Grid item xs>
+                              <Slider
+                                value={opacity * 100}
+                                onChange={(e, v) => {
+                                  // setBordCol(e.target.value);
+                                  setImgOpacity(v / 100);
+                                  const goats = secImgElements;
+                                  goats[secImgEditId] = {
+                                    ...goats[secImgEditId],
+                                    opacity: v / 100
+                                  };
+                                  setSecImgElements(secImgElements);
+                                }}
+                                aria-labelledby="continuous-slider-opacity"
+                              />
+                            </Grid>
+                          </Grid>
+                        </div>
+                        {/* {JSON.stringify(opacity) / 100} */}
+                        <Typography
+                          id="continuous-slider-BorderRadius"
+                          className="RightSideBar2__Text"
+                          gutterBottom
+                        >
+                          Border Radius
+                        </Typography>
+                        <div style={{ width: "90%", marginLeft: "12px" }}>
+                          <Grid container spacing={2}>
+                            <Grid item xs>
+                              <Slider
+                                value={borderRadius}
+                                onChange={(e, v) => {
+                                  setImgborderRadius(v);
+                                  const goats = secImgElements;
+                                  goats[secImgEditId] = {
+                                    ...goats[secImgEditId],
+                                    borderRadius: v
+                                  };
+                                  setSecImgElements(secImgElements);
+                                }}
+                                aria-labelledby="continuous-slider-BorderRadius"
+                              />
+                            </Grid>
+                          </Grid>
+                        </div>
+                        <h3>EFFECTS</h3>
+                        <Typography
+                          id="continuous-slider-Blur"
+                          className="RightSideBar2__Text"
+                          gutterBottom
+                        >
+                          Blur
+                        </Typography>
+                        <div style={{ width: "90%", marginLeft: "12px" }}>
+                          <Grid container spacing={2}>
+                            <Grid item xs>
+                              <Slider
+                                value={blur * 10}
+                                onChange={(e, v) => {
+                                  // setBordCol(e.target.value);
+                                  setImgBlur(v / 10);
+                                  const goats = secImgElements;
+                                  goats[secImgEditId] = {
+                                    ...goats[secImgEditId],
+                                    blur: v / 10
+                                  };
+                                  setSecImgElements(secImgElements);
+                                }}
+                                aria-labelledby="continuous-slider-opacity"
+                              />
+                            </Grid>
+                          </Grid>
+                        </div>
+                        {/* {JSON.stringify(opacity) / 100} */}
+                        <Typography
+                          id="continuous-slider-Contrast"
+                          className="RightSideBar2__Text"
+                          gutterBottom
+                        >
+                          Contrast
+                        </Typography>
+                        <div style={{ width: "90%", marginLeft: "12px" }}>
+                          <Grid container spacing={2}>
+                            <Grid item xs>
+                              <Slider
+                                value={contrast * 10}
+                                onChange={(e, v) => {
+                                  setImgContrast(v / 10);
+                                  const goats = secImgElements;
+                                  goats[secImgEditId] = {
+                                    ...goats[secImgEditId],
+                                    contrast: v / 10
+                                  };
+                                  setSecImgElements(secImgElements);
+                                }}
+                                aria-labelledby="continuous-slider-Contrast"
+                              />
+                            </Grid>
+                          </Grid>
+                        </div>
+                        <Typography
+                          id="continuous-slider-Grayscale"
+                          className="RightSideBar2__Text"
+                          gutterBottom
+                        >
+                          Grayscale
+                        </Typography>
+                        <div style={{ width: "90%", marginLeft: "12px" }}>
+                          <Grid container spacing={2}>
+                            <Grid item xs>
+                              <Slider
+                                value={grayscale * 100}
+                                onChange={(e, v) => {
+                                  setImgGrayscale(v / 100);
+                                  const goats = secImgElements;
+                                  goats[secImgEditId] = {
+                                    ...goats[secImgEditId],
+                                    grayscale: v / 100
+                                  };
+                                  setSecImgElements(secImgElements);
+                                }}
+                                aria-labelledby="continuous-slider-Grayscale"
+                              />
+                            </Grid>
+                          </Grid>
+                        </div>
+                        <Typography
+                          id="continuous-slider-Invert"
+                          className="RightSideBar2__Text"
+                          gutterBottom
+                        >
+                          Invert
+                        </Typography>
+                        <div style={{ width: "90%", marginLeft: "12px" }}>
+                          <Grid container spacing={2}>
+                            <Grid item xs>
+                              <Slider
+                                value={invert * 100}
+                                onChange={(e, v) => {
+                                  setImgInvert(v / 100);
+                                  const goats = secImgElements;
+                                  goats[secImgEditId] = {
+                                    ...goats[secImgEditId],
+                                    invert: v / 100
+                                  };
+                                  setSecImgElements(secImgElements);
+                                }}
+                                aria-labelledby="continuous-slider-Invert"
+                              />
+                            </Grid>
+                          </Grid>
+                        </div>
                         <div style={{ display: "flex" }}>
                           <div className="RightSideBar2__Btn">
                             <h2 className="RightSideBar2__Btn__title">None </h2>

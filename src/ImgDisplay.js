@@ -14,19 +14,33 @@ function ImgDisplay({ item, index, handleClick }) {
             onMouseOver={() => setMouseOver(true)}
             onMouseOut={() => setMouseOver(false)}
             style={{
+              opacity: item.opacity,
               display: !item.isImgdisplay ? "inline-block" : "none",
               objectFit: "contain",
-              width: "180px",
+              width: item.width + "px",
               position: "absolute",
               top: index * 50,
               left: index * 50,
               margin: "auto",
+              borderRadius: item.borderRadius,
               border: "1px solid ",
-              borderColor: item.bordCol
+              filter:
+                "blur(" +
+                item.blur +
+                "px) grayscale(" +
+                item.grayscale +
+                ") contrast(" +
+                item.contrast +
+                ") invert(" +
+                item.invert +
+                ")",
+
+              borderColor: item.borderColor
             }}
             src={item.ImgSource}
             alt={index}
           />
+          {/* {JSON.stringify(item)} */}
         </div>
       </div>
     </Draggable>

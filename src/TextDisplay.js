@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import InputBase from "@material-ui/core/InputBase";
+import "./TextDisplay.css";
 function TextDisplay({ rank, item, index, handleClick, setShowText }) {
   const inputRef = useRef(null);
   const [isMousedOver, setMouseOver] = useState(true);
@@ -43,10 +44,17 @@ function TextDisplay({ rank, item, index, handleClick, setShowText }) {
             multiline
             size="medium"
             style={{
-              fontSize: "30px",
+              fontSize: item.fontSize + "px",
               display: "inline-block",
+              fontFamily: item.fontFamily,
               backgroundColor: "inherit",
               color: "inherit",
+              fontWeight: item.isBold ? "bold" : "normal",
+              fontStyle: item.isItalic ? "italic" : "normal",
+              textDecoration: item.isUnderLine ? "underline" : "none",
+              backgroundColor: item.backgroundColor,
+              WebkitTextStroke: "1px " + item.outlineColor,
+              WebkitTextStrokeWidth: "thin",
               position: "relative",
               top: index * 30,
               left: index * 30,
@@ -73,7 +81,7 @@ function TextDisplay({ rank, item, index, handleClick, setShowText }) {
                 setShowText(true);
               }}
               style={{
-                fontSize: "30px",
+                fontSize: item.fontSize + "px",
                 position: "absolute",
                 top: index * 10,
                 left: index * 10,
@@ -86,7 +94,7 @@ function TextDisplay({ rank, item, index, handleClick, setShowText }) {
                 fontStyle: item.isItalic ? "italic" : "normal",
                 textDecoration: item.isUnderLine ? "underline" : "none",
                 color: item.color,
-                fontFamily: "Almendra SC",
+                fontFamily: item.fontFamily,
                 backgroundColor: item.backgroundColor,
                 WebkitTextStroke: "1px " + item.outlineColor,
                 WebkitTextStrokeWidth: "thin"
@@ -94,7 +102,6 @@ function TextDisplay({ rank, item, index, handleClick, setShowText }) {
             >
               {/* {JSON.stringify(item)} */}
               {title}
-              {JSON.stringify(rank)}
             </span>
           </div>
         )}

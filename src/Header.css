@@ -47,8 +47,9 @@
 
 /* workspace css */
 .WorkSpace {
+  min-width: 50vw;
   flex: 0.7;
-  margin-top: 5vh;
+  margin-top: 1.5vh;
   height: 77.8vh;
   justify-content: center;
   /* overflow-x: auto; */
