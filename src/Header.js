@@ -244,9 +244,7 @@ function Header() {
   const [fileName, setFileName] = React.useState("");
   const [id, setId] = useState(0);
   const [imageid, setImageId] = useState(0);
-  const [activeImage, setActiveImage] = React.useState(
-    "https://images.pexels.com/photos/34153/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350"
-  );
+  const [activeImage, setActiveImage] = React.useState("");
 
   const FFamclasses = useFFamStyles();
   // const handleFFamChange = (event) => {
@@ -290,6 +288,7 @@ function Header() {
   };
   const handleImgEditClick = (id) => {
     setSecImgEditId(id);
+    console.log("header, handleimgedit click");
   };
   const displayText = () => {
     return textelements.map((item, index) => {
@@ -378,26 +377,36 @@ function Header() {
         </div>
         <div className="header">
           <div className="header__left">
-            <HeaderBtn
+            {/* <HeaderBtn
               handleClick={() => {
                 setShowText(false);
               }}
               selected
               Icon={PublishIcon}
               title="Upload"
-            />
-            <HeaderBtn
-              handleClick={() => {
-                setShowText(false);
-                settextelements((prevElements) => {
-                  return [...prevElements, textelement];
-                });
+            /> */}
+            <input
+              accept="image/* "
+              className={secclasses.input}
+              id="LocalfileInput"
+              name="LocalfileInput"
+              // multiple
+              type="file"
+              onChange={(event) => {
+                setActiveImage(
+                  window.URL.createObjectURL(event.target.files[0])
+                );
               }}
-              style={{ color: "inherit" }}
-              Icon={TextFieldsIcon}
-              TramRounded
-              title="Text"
             />
+            <label htmlFor="LocalfileInput">
+              <HeaderBtn
+                handleClick={() => {
+                  setShowText(false);
+                }}
+                Icon={ViewModuleIcon}
+                title="Background Image"
+              />
+            </label>
             <input
               accept="image/* "
               className={secclasses.input}
@@ -419,46 +428,37 @@ function Header() {
             <HeaderBtn
               handleClick={() => {
                 setShowText(false);
+                settextelements((prevElements) => {
+                  return [...prevElements, textelement];
+                });
+              }}
+              style={{ color: "inherit" }}
+              Icon={TextFieldsIcon}
+              TramRounded
+              title="Text"
+            />
+            {/* <HeaderBtn
+              handleClick={() => {
+                setShowText(false);
               }}
               Icon={PlaylistPlayIcon}
               title="Timeline"
-            />
-            <input
-              accept="image/* "
-              className={secclasses.input}
-              id="LocalfileInput"
-              name="LocalfileInput"
-              // multiple
-              type="file"
-              onChange={(event) => {
-                setActiveImage(
-                  window.URL.createObjectURL(event.target.files[0])
-                );
-              }}
-            />
-            <label htmlFor="LocalfileInput">
-              <HeaderBtn
-                handleClick={() => {
-                  setShowText(false);
-                }}
-                Icon={ViewModuleIcon}
-                title="Local Image"
-              />
-            </label>
-            <HeaderBtn
+            /> */}
+
+            {/* <HeaderBtn
               handleClick={() => {
                 setShowText(false);
               }}
               Icon={AudiotrackIcon}
               title="Audio"
-            />
-            <HeaderBtn
+            /> */}
+            {/* <HeaderBtn
               handleClick={() => {
                 setShowText(false);
               }}
               Icon={SubtitlesIcon}
               title="Subtitles"
-            />
+            /> */}
           </div>
           <div
             handleClick={() => {
@@ -541,21 +541,32 @@ function Header() {
               >
                 <div
                   id="workingSpace"
+                  style={{
+                    backgroundColor: "#cfe8fc",
+                    backgroundImage: "url(" + activeImage + ")",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    height: "80vh",
+                    maxWidth: "60vw",
+                    overflow: "hidden"
+                    // margin: "5vh auto"
+                  }}
                   onClick={() => {
                     // console.log("clicked");
                     // setShowText(true);
                     // setRBar2Value(1);
                   }}
-                  style={{
-                    // height: "75vh",
-                    // width: "100%",
-                    flex: "0.6",
-                    position: "relative",
-                    // overflowX: "scroll",
-                    padding: "0"
-                  }}
+                  // style={{
+                  //   // height: "75vh",
+                  //   // width: "100%",
+                  //   flex: "0.6",
+                  //   position: "relative",
+                  //   // overflowX: "scroll",
+                  //   padding: "0"
+                  // }}
                 >
-                  <img
+                  {/* <img
                     style={{
                       position: "absolute",
                       // top: "50%",
@@ -568,9 +579,19 @@ function Header() {
                     }}
                     src={activeImage}
                     alt=""
-                  />
-                  {displayText()}
-                  {displayImage()}
+                  /> */}
+                  <div
+                    style={{
+                      height: "80vh",
+                      width: "100%",
+                      position: "relative",
+                      overflow: "hidden",
+                      padding: "0"
+                    }}
+                  >
+                    {displayText()}
+                    {displayImage()}
+                  </div>
                 </div>
               </Typography>
             </Container>
@@ -1200,6 +1221,10 @@ function Header() {
                             </Grid>
                           </Grid>
                         </div> */}
+                        <br />
+                        <hr />
+                        <br />
+                        <h3>EFFECTS</h3>
                         <Typography
                           id="continuous-slider-opacity"
                           className="RightSideBar2__Text"
@@ -1254,8 +1279,7 @@ function Header() {
                             </Grid>
                           </Grid>
                         </div>
-                        <h3>EFFECTS</h3>
-                        <Typography
+                        {/* <Typography
                           id="continuous-slider-Blur"
                           className="RightSideBar2__Text"
                           gutterBottom
@@ -1281,9 +1305,9 @@ function Header() {
                               />
                             </Grid>
                           </Grid>
-                        </div>
+                        </div> */}
                         {/* {JSON.stringify(opacity) / 100} */}
-                        <Typography
+                        {/* <Typography
                           id="continuous-slider-Contrast"
                           className="RightSideBar2__Text"
                           gutterBottom
@@ -1308,7 +1332,7 @@ function Header() {
                               />
                             </Grid>
                           </Grid>
-                        </div>
+                        </div> */}
                         <Typography
                           id="continuous-slider-Grayscale"
                           className="RightSideBar2__Text"
@@ -1335,7 +1359,7 @@ function Header() {
                             </Grid>
                           </Grid>
                         </div>
-                        <Typography
+                        {/* <Typography
                           id="continuous-slider-Invert"
                           className="RightSideBar2__Text"
                           gutterBottom
@@ -1360,18 +1384,7 @@ function Header() {
                               />
                             </Grid>
                           </Grid>
-                        </div>
-                        <div style={{ display: "flex" }}>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">None </h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              Drop Shadow
-                            </h2>
-                          </div>
-                        </div>
+                        </div> */}
                         <div style={{ display: "flex" }}>
                           <div
                             onClick={() => {
@@ -1388,7 +1401,10 @@ function Header() {
                             className="RightSideBar2__Btn"
                           >
                             <DeleteForever className="RightSideBar2__Btn__icon" />
-                            <h2 className="RightSideBar2__Btn__title">
+                            <h2
+                              style={{ width: "100%" }}
+                              className="RightSideBar2__Btn__title"
+                            >
                               {" "}
                               &nbsp;Delete{" "}
                             </h2>{" "}
@@ -1484,8 +1500,8 @@ function Header() {
                 <div className="RightSideBar1Btns">
                   <Btn title="Custom Size" />
                 </div>
-                {/* Padding */}
-                <p className="RightSideBar1__Text">EXPAND PADDING</p>
+
+                {/* <p className="RightSideBar1__Text">EXPAND PADDING</p>
                 <div className="RightSideBar1__Padding">
                   <HeaderBtn Icon={BorderTopIcon} title="Top" />
                   <HeaderBtn Icon={BorderBottomIcon} title="Bottom" />
@@ -1497,11 +1513,11 @@ function Header() {
                 <div className="RightSideBar1__Padding">
                   <HeaderBtn Icon={BorderClearIcon} title="Remove Padding" />
                 </div>
-                {/* Color */}
+             
                 <p className="RightSideBar1__Text">BACKGROUND COLOR</p>
                 <div className="RightSideBar1__Color">
                   <HeaderBtn Icon={ColorizeIcon} title="Color" />
-                </div>
+                </div> */}
               </div>
             )}
           </CustomScroll>
