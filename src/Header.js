@@ -212,6 +212,7 @@ function Header() {
   const [outlineColor, setOutlineColor] = useState({});
   const [fontSize, setFSize] = useState("24");
   const [alignment, setAlignment] = useState("justify");
+  const [title, setTitle] = useState("Sample Text");
   /////related to secondary image, separete js file
   const [secImgId, setSecImgId] = useState(0);
   const [secImgEditId, setSecImgEditId] = useState("");
@@ -602,13 +603,42 @@ function Header() {
                         index={0}
                         dir={RBar2theme.direction}
                       >
-                        {/* <div className="RightSideBar2__Btn">
-                          <CreateIcon className="RightSideBar2__Btn__icon" />
-                          <h2 className="RightSideBar2__Btn__title">
-                            {" "}
-                            &nbsp;Edit Text{" "}
-                          </h2>{" "}
-                        </div> */}
+                        <div
+                          style={{ marginTop: "0" }}
+                          className="RightSideBar2__Btn"
+                        >
+                          <CreateIcon
+                            style={{ margin: "0 10px 0 5px" }}
+                            className="RightSideBar2__Btn__icon"
+                          />
+                          <InputBase
+                            className="RightSideBar2__Btn"
+                            // multiline
+                            style={{
+                              color: "#fff",
+                              margin: "0",
+                              backgroundColor: "#252935",
+                              width: "100%"
+                            }}
+                            value={title}
+                            onChange={(e) => {
+                              setTitle(e.target.value);
+                              const sheeps = textelements;
+                              sheeps[id] = {
+                                ...sheeps[id],
+                                title: e.target.value
+                              };
+                              settextelements(textelements);
+                            }}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            marginTop: "0",
+                            alignItems: "center"
+                          }}
+                        ></div>
                         <p className="RightSideBar2__Text">FONT</p>
                         <div>
                           <div>
@@ -1143,14 +1173,14 @@ function Header() {
                             </h2>{" "}
                           </div>
                         </label>
-                        <Typography
+                        {/* <Typography
                           id="continuous-slider-Width"
                           className="RightSideBar2__Text"
                           gutterBottom
                         >
                           Width
                         </Typography>
-                        {/* {JSON.stringify(width)} */}
+               
                         <div style={{ width: "90%", marginLeft: "12px" }}>
                           <Grid container spacing={2}>
                             <Grid item xs>
@@ -1169,7 +1199,7 @@ function Header() {
                               />
                             </Grid>
                           </Grid>
-                        </div>
+                        </div> */}
                         <Typography
                           id="continuous-slider-opacity"
                           className="RightSideBar2__Text"
