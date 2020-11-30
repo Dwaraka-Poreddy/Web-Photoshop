@@ -10,19 +10,6 @@ import { saveAs } from "file-saver";
 import Card from "@material-ui/core/Card";
 
 export default function Main() {
-  function handleMemeDownlod(el) {
-    var canvas = document.getElementById("workingSpace");
-    html2canvas(canvas).then(function (canvas) {
-      domtoimage
-        .toBlob(document.getElementById("workingSpace"))
-
-        .then(function (base64image) {
-          console.log();
-          window.saveAs(base64image, "newspaper");
-        });
-    });
-  }
-
   return (
     <div>
       {/* ////////////////////////// */}
@@ -35,12 +22,6 @@ export default function Main() {
           </div>
 
           <p>GiftCard Generator</p>
-          <div style={{ display: "flex" }} className="header__right">
-            <Btn
-              handleClick={() => handleMemeDownlod(this)}
-              title="Export Image"
-            />
-          </div>
         </div>
       </div>
       {/* /////////////////////// */}
@@ -98,22 +79,24 @@ export default function Main() {
             </h2>
           </Card>
         </Link>
-        <Card className="MainCard">
-          <img
-            style={{ height: "80%", width: "100%" }}
-            src="https://i1.fnp.com/images/pr/l/v19700101053000/personalized-magazine-cover_1.jpg"
-            alt=""
-          />
-          <h2
-            style={{
-              backgroundColor: "#191e2b",
-              margin: "auto",
-              color: "#fff"
-            }}
-          >
-            News Paper
-          </h2>
-        </Card>
+        <Link to="/magazine">
+          <Card className="MainCard">
+            <img
+              style={{ height: "80%", width: "100%" }}
+              src="https://i1.fnp.com/images/pr/l/v19700101053000/personalized-magazine-cover_1.jpg"
+              alt=""
+            />
+            <h2
+              style={{
+                backgroundColor: "#191e2b",
+                margin: "auto",
+                color: "#fff"
+              }}
+            >
+              Magazine Cover
+            </h2>
+          </Card>
+        </Link>
       </div>
       <br />
       <br />

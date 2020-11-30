@@ -308,7 +308,8 @@ const EditableInput = (props) => {
                 backgroundColor: "inherit",
                 color: "inherit",
                 border: "0.001px solid ",
-                borderRadius: "5px"
+                borderRadius: "5px",
+                fontWeight: "inherit"
               }}
               value={text}
               onChange={(e) => {

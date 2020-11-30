@@ -58,95 +58,101 @@ export default function App() {
           </div>
         </div>
       </div>
-      <div style={{ backgroundColor: "#FFFFFF" }} id="newsPaper">
-        <div>
-          <img
-            style={{
-              width: "100%"
-            }}
-            src={require("../src/Images/Heading.png")}
-            alt="Heading"
-          />
-        </div>
-        <div style={{ display: "flex" }}>
-          <img
-            style={{ width: "15%" }}
-            src={require("../src/Images/Left.png")}
-            alt="Left"
-          />
-          <div
-            style={{
-              width: "50%",
-              textAlign: "center",
-              backgroundColor: "#ffffff"
-            }}
-          >
-            <div>
-              <h1
-                style={{
-                  fontSize: "100px",
-                  fontFamily: "oxford",
-                  fontWeight: "400",
-                  margin: "5px"
-                }}
-              >
-                <EditableText text=" World's Best Couple" />
-              </h1>
-              <input
-                accept="image/* "
-                className={secclasses.input}
-                id="LocalfileInput"
-                name="LocalfileInput"
-                type="file"
-                onChange={(event) => {
-                  setImgSource(
-                    window.URL.createObjectURL(event.target.files[0])
-                  );
-                }}
-              />
-              <label htmlFor="LocalfileInput">
-                <img
-                  onMouseEnter={() => setIsMousedOver(true)}
-                  onMouseLeave={() => setIsMousedOver(false)}
+      <div style={{ display: "flex" }}>
+        <div style={{ width: "7%" }}></div>
+        <div
+          style={{ backgroundColor: "#FFFFFF", width: "86%" }}
+          id="newsPaper"
+        >
+          <div>
+            <img
+              style={{
+                width: "100%"
+              }}
+              src={require("../src/Images/Heading.png")}
+              alt="Heading"
+            />
+          </div>
+          <div style={{ display: "flex" }}>
+            <img
+              style={{ width: "15%" }}
+              src={require("../src/Images/Left.png")}
+              alt="Left"
+            />
+            <div
+              style={{
+                width: "50%",
+                textAlign: "center",
+                backgroundColor: "#ffffff"
+              }}
+            >
+              <div>
+                <h1
                   style={{
-                    width: "100%",
-                    maxHeight: "550px",
-                    border: isMousedOver ? "2px dashed " : null
+                    fontSize: "4.8rem",
+                    fontFamily: "oxford",
+                    fontWeight: "400",
+                    margin: "5px"
                   }}
-                  src={imgSource}
-                  alt="MainImage"
+                >
+                  <EditableText text=" World's Best Couple" />
+                </h1>
+                <input
+                  accept="image/* "
+                  className={secclasses.input}
+                  id="LocalfileInput"
+                  name="LocalfileInput"
+                  type="file"
+                  onChange={(event) => {
+                    setImgSource(
+                      window.URL.createObjectURL(event.target.files[0])
+                    );
+                  }}
                 />
-              </label>
+                <label htmlFor="LocalfileInput">
+                  <img
+                    onMouseEnter={() => setIsMousedOver(true)}
+                    onMouseLeave={() => setIsMousedOver(false)}
+                    style={{
+                      width: "100%",
+                      maxHeight: "550px",
+                      border: isMousedOver ? "2px dashed " : null
+                    }}
+                    src={imgSource}
+                    alt="MainImage"
+                  />
+                </label>
 
-              {/* <img
+                {/* <img
                 style={{ width: "100%" }}
                 src="https://firebasestorage.googleapis.com/v0/b/update-image.appspot.com/o/images%2Fmatheus-ferrero-ODMNSWjel_I-unsplash.jpg?alt=media&token=a08aa147-491e-49cd-9061-d32abb09f6b0"
                 alt="MainImage"
               /> */}
-              <img
-                style={{ width: "100%" }}
-                src={require("../src/Images/Below.png")}
-                alt="Below"
-              />
+                <img
+                  style={{ width: "100%" }}
+                  src={require("../src/Images/Below.png")}
+                  alt="Below"
+                />
+              </div>
             </div>
+            <img
+              style={{ width: "35%" }}
+              src={require("../src/Images/Right.png")}
+              alt="Right"
+            />
           </div>
-          <img
-            style={{ width: "35%" }}
-            src={require("../src/Images/Right.png")}
-            alt="Right"
-          />
-        </div>
-        <div>
-          <img
-            style={{ width: "100%" }}
-            src={require("../src/Images/Below1.png")}
-            alt="Below1"
-          />
-          <img
-            style={{ width: "100%" }}
-            src={require("../src/Images/Below2.png")}
-            alt="Below2"
-          />
+          <div>
+            <img
+              style={{ width: "100%" }}
+              src={require("../src/Images/Below1.png")}
+              alt="Below1"
+            />
+            <img
+              style={{ width: "100%" }}
+              src={require("../src/Images/Below2.png")}
+              alt="Below2"
+            />
+          </div>
         </div>
       </div>
     </div>
