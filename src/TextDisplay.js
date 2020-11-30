@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import InputBase from "@material-ui/core/InputBase";
 import "./TextDisplay.css";
-function TextDisplay({ rank, item, index, handleClick, setShowText }) {
+function TextDisplay({ rank, item, index, handleClick }) {
   const inputRef = useRef(null);
   const [isMousedOver, setMouseOver] = useState(true);
   const [inputVisible, setInputVisible] = useState(false);
@@ -16,7 +16,6 @@ function TextDisplay({ rank, item, index, handleClick, setShowText }) {
     ) {
       setInputVisible(false);
       setMouseOver(false);
-      setShowText(false);
       // Disable title input
     }
   }
@@ -45,7 +44,6 @@ function TextDisplay({ rank, item, index, handleClick, setShowText }) {
             onMouseOut={() => setMouseOver(false)}
             onClick={() => {
               handleClick(index);
-              setShowText(true);
             }}
             style={{
               fontSize: item.fontSize + "px",

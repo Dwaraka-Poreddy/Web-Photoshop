@@ -72,7 +72,8 @@ import uuid from "react-uuid";
 const useFFamStyles = makeStyles((theme) => ({
   formControl: {
     // margin: theme.spacing(1),
-    minWidth: 300
+    // minWidth: 100
+    width: "100%"
   },
   selectEmpty: {
     // marginTop: theme.spacing(2)
@@ -97,79 +98,6 @@ const useStylesinput = makeStyles((theme) => ({
       width: "12ch",
       color: "#ffffff"
     }
-  }
-}));
-
-//things related to Rightsidebar2
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={0.5}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-const RBar2AntTabs = withStyles({
-  root: {
-    borderBottom: "0.05px solid #5a5d68",
-    backgroundColor: "#252935"
-  },
-  indicator: {
-    backgroundColor: "#ffffff"
-  }
-})(Tabs);
-const RBar2AntTab = withStyles((RBar2theme) => ({
-  root: {
-    textTransform: "none",
-    minWidth: 45,
-    fontWeight: RBar2theme.typography.fontWeightRegular,
-    marginRight: RBar2theme.spacing(4),
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"'
-    ].join(","),
-    "&:hover": {
-      color: "#ffffff",
-      opacity: 1
-    },
-    "&$selected": {
-      color: "#ffffff",
-      fontWeight: RBar2theme.typography.fontWeightMedium
-    },
-    "&:focus": {
-      color: "#ffffff"
-    }
-  },
-  selected: {}
-}))((props) => <Tab disableRipple {...props} />);
-const RBar2useStyles = makeStyles((RBar2theme) => ({
-  root: {
-    flexGrow: 1
-  },
-  padding: {
-    padding: RBar2theme.spacing(3)
-  },
-  demo1: {
-    backgroundColor: RBar2theme.palette.background.paper
   }
 }));
 
@@ -202,6 +130,8 @@ const imginitState = {
 
 function Header() {
   const data = Response;
+
+  const [rightMenu, setRightMenu] = useState(1);
   const [fontFamily, setFfamily] = useState("Font Family");
   const [isdisplay, setisDisplay] = useState("inline-block");
   const [color, setColor] = useState({});
@@ -227,15 +157,10 @@ function Header() {
   const [invert, setImgInvert] = useState("0");
   const [width, setImgWidth] = useState("0");
   ///related to rightsidebae2
-  const RBar2classes = RBar2useStyles();
-  const RBar2theme = useTheme();
-  const [RBar2value, setRBar2Value] = React.useState(0);
-  const handleRBar2Change = (event, newValue) => {
-    setRBar2Value(newValue);
-  };
+
   // const [isBold, setIsBold] = useState(true);
   ///////
-  const [isshowText, setShowText] = useState(false);
+
   const [textelements, settextelements] = useState([]);
   const [textelement, settextelement] = useState(initialState);
   const [secImgElements, setSecImgElements] = useState([]);
@@ -260,6 +185,7 @@ function Header() {
         .toBlob(document.getElementById("workingSpace"))
 
         .then(function (base64image) {
+          console.log();
           window.saveAs(base64image, fileName);
         });
     });
@@ -296,7 +222,7 @@ function Header() {
       return (
         <div
           onClick={() => {
-            setRBar2Value(0);
+            setRightMenu(2);
           }}
           style={{ display: "flex" }}
         >
@@ -305,7 +231,6 @@ function Header() {
             item={item}
             index={index}
             handleClick={handleClick}
-            setShowText={setShowText}
           />
           {/* {JSON.stringify(rank)} */}
         </div>
@@ -318,8 +243,7 @@ function Header() {
       return (
         <div
           onClick={() => {
-            setShowText(true);
-            setRBar2Value(1);
+            setRightMenu(3);
             setImageId(index);
           }}
         >
@@ -337,7 +261,7 @@ function Header() {
     <div>
       <div
         onClick={() => {
-          setShowText(false);
+          setRightMenu(1);
         }}
         className="allheader"
       >
@@ -377,14 +301,6 @@ function Header() {
         </div>
         <div className="header">
           <div className="header__left">
-            {/* <HeaderBtn
-              handleClick={() => {
-                setShowText(false);
-              }}
-              selected
-              Icon={PublishIcon}
-              title="Upload"
-            /> */}
             <input
               accept="image/* "
               className={secclasses.input}
@@ -399,13 +315,7 @@ function Header() {
               }}
             />
             <label htmlFor="LocalfileInput">
-              <HeaderBtn
-                handleClick={() => {
-                  setShowText(false);
-                }}
-                Icon={ViewModuleIcon}
-                title="Background Image"
-              />
+              <HeaderBtn Icon={ViewModuleIcon} title="Background Image" />
             </label>
             <input
               accept="image/* "
@@ -417,17 +327,10 @@ function Header() {
               onChange={handleSecImageInputChange}
             />
             <label htmlFor="fileInput">
-              <HeaderBtn
-                handleClick={() => {
-                  setShowText(false);
-                }}
-                Icon={SearchIcon}
-                title="Add Images"
-              />
+              <HeaderBtn Icon={SearchIcon} title="Add Images" />
             </label>
             <HeaderBtn
               handleClick={() => {
-                setShowText(false);
                 settextelements((prevElements) => {
                   return [...prevElements, textelement];
                 });
@@ -437,52 +340,14 @@ function Header() {
               TramRounded
               title="Text"
             />
-            {/* <HeaderBtn
-              handleClick={() => {
-                setShowText(false);
-              }}
-              Icon={PlaylistPlayIcon}
-              title="Timeline"
-            /> */}
-
-            {/* <HeaderBtn
-              handleClick={() => {
-                setShowText(false);
-              }}
-              Icon={AudiotrackIcon}
-              title="Audio"
-            /> */}
-            {/* <HeaderBtn
-              handleClick={() => {
-                setShowText(false);
-              }}
-              Icon={SubtitlesIcon}
-              title="Subtitles"
-            /> */}
           </div>
-          <div
-            handleClick={() => {
-              setShowText(false);
-            }}
-            className="header__right"
-          >
-            <HeaderBtn
-              handleClick={() => {
-                setShowText(false);
-              }}
-              Icon={SettingsIcon}
-              title="Settings"
-            />
+          <div className="header__right">
+            <HeaderBtn Icon={SettingsIcon} title="Settings" />
           </div>
         </div>
       </div>
       <div className="body">
-        <div
-          onClick={() => {
-            setShowText(false);
-          }}
-          className="LeftSideBar"
-        >
+        <div className="LeftSideBar">
           <h2
             style={{
               textAlign: "center",
@@ -552,11 +417,7 @@ function Header() {
                     overflow: "hidden"
                     // margin: "5vh auto"
                   }}
-                  onClick={() => {
-                    // console.log("clicked");
-                    // setShowText(true);
-                    // setRBar2Value(1);
-                  }}
+
                   // style={{
                   //   // height: "75vh",
                   //   // width: "100%",
@@ -597,604 +458,572 @@ function Header() {
             </Container>
           </React.Fragment>
         </div>
-        <div>
-          <CustomScroll style={{ backgroundColor: "#252935" }}>
-            {isshowText ? (
-              <div className="RightSideBar2">
-                <div className="RightSideBar2">
-                  <div className={RBar2classes.root}>
-                    <div className={RBar2classes.demo1}>
-                      <RBar2AntTabs
-                        value={RBar2value}
-                        onChange={handleRBar2Change}
-                        aria-label="ant example"
-                      >
-                        <RBar2AntTab label="TEXT" />
-                        <RBar2AntTab label="IMAGE" />
-                        <RBar2AntTab label=" ANIMATE" />
-                      </RBar2AntTabs>
-                    </div>
-                    <SwipeableViews
-                      axis={RBar2theme.direction === "rtl" ? "x-reverse" : "x"}
-                      index={RBar2value}
-                      onChangeIndex={handleRBar2Change}
+        <div style={{ width: "20%" }}>
+          {rightMenu === 1 ? (
+            <div className="RightSideBar1">
+              <p className="RightSideBar1__Text">OUTPUT SIZE</p>
+              <div className="RightSideBar1Btns">
+                <Btn selected title="1:1" />
+                <Btn title="9:16" />
+                <Btn title="16:9" />
+                <Btn title="4:5" />
+                <Btn title="5:4" />
+              </div>
+              <div className="RightSideBar1Btns">
+                <Btn title="Custom Size" />
+              </div>
+            </div>
+          ) : rightMenu === 2 ? (
+            <div className="RightSideBar2">
+              <div style={{ marginTop: "0" }} className="RightSideBar2__Btn">
+                <CreateIcon
+                  style={{ margin: "0 10px 0 5px" }}
+                  className="RightSideBar2__Btn__icon"
+                />
+                <InputBase
+                  className="RightSideBar2__Btn"
+                  // multiline
+                  style={{
+                    color: "#fff",
+                    margin: "0",
+                    backgroundColor: "#252935",
+                    width: "100%"
+                  }}
+                  value={title}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                    const sheeps = textelements;
+                    sheeps[id] = {
+                      ...sheeps[id],
+                      title: e.target.value
+                    };
+                    settextelements(textelements);
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  marginTop: "0",
+                  alignItems: "center"
+                }}
+              ></div>
+              <p className="RightSideBar2__Text">FONT</p>
+              <div>
+                <div>
+                  <FormControl className={FFamclasses.formControl}>
+                    <Select
+                      style={{
+                        // fontFamily: fontFamily,
+                        width: "90%",
+                        paddingRight: "0",
+                        fontFamily: textelements[id].fontFamily,
+                        color: "#fff"
+                      }}
+                      // value={fontFamily}
+                      value={textelements[id].fontFamily}
+                      onChange={(e) => {
+                        setFfamily(e.target.value);
+                        const sheeps = textelements;
+                        sheeps[id] = {
+                          ...sheeps[id],
+                          fontFamily: e.target.value
+                        };
+                        settextelements(textelements);
+                      }}
+                      displayEmpty
+                      className={FFamclasses.selectEmpty}
+                      inputProps={{ "aria-label": "Without label" }}
                     >
-                      <TabPanel
-                        value={RBar2value}
-                        index={0}
-                        dir={RBar2theme.direction}
+                      <MenuItem value="Font Family">
+                        <em>Font Family</em>
+                      </MenuItem>
+                      <MenuItem style={{ fontFamily: "Abel" }} value={"Abel"}>
+                        Abel
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Akronim" }}
+                        value={"Akronim"}
                       >
-                        <div
-                          style={{ marginTop: "0" }}
-                          className="RightSideBar2__Btn"
-                        >
-                          <CreateIcon
-                            style={{ margin: "0 10px 0 5px" }}
-                            className="RightSideBar2__Btn__icon"
-                          />
-                          <InputBase
-                            className="RightSideBar2__Btn"
-                            // multiline
-                            style={{
-                              color: "#fff",
-                              margin: "0",
-                              backgroundColor: "#252935",
-                              width: "100%"
-                            }}
-                            value={title}
-                            onChange={(e) => {
-                              setTitle(e.target.value);
-                              const sheeps = textelements;
-                              sheeps[id] = {
-                                ...sheeps[id],
-                                title: e.target.value
-                              };
-                              settextelements(textelements);
-                            }}
-                          />
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginTop: "0",
-                            alignItems: "center"
-                          }}
-                        ></div>
-                        <p className="RightSideBar2__Text">FONT</p>
-                        <div>
-                          <div>
-                            <FormControl className={FFamclasses.formControl}>
-                              <Select
-                                style={{
-                                  fontFamily: fontFamily,
-                                  // fontFamily: textelements[id].fontFamily,
-                                  color: "#fff"
-                                }}
-                                value={fontFamily}
-                                // value={textelements[id].fontFamily}
-                                onChange={(e) => {
-                                  setFfamily(e.target.value);
-                                  const sheeps = textelements;
-                                  sheeps[id] = {
-                                    ...sheeps[id],
-                                    fontFamily: e.target.value
-                                  };
-                                  settextelements(textelements);
-                                }}
-                                displayEmpty
-                                className={FFamclasses.selectEmpty}
-                                inputProps={{ "aria-label": "Without label" }}
-                              >
-                                <MenuItem value="Font Family">
-                                  <em>Font Family</em>
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Abel" }}
-                                  value={"Abel"}
-                                >
-                                  Abel
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Akronim" }}
-                                  value={"Akronim"}
-                                >
-                                  Alex Brush
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Alex Brush" }}
-                                  value={"Alex Brush"}
-                                >
-                                  Akronim
-                                </MenuItem>
-
-                                <MenuItem
-                                  style={{ fontFamily: "Allura" }}
-                                  value={"Allura"}
-                                >
-                                  Allura
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Almendra Display" }}
-                                  value={"Almendra Display"}
-                                >
-                                  Almendra Display
-                                </MenuItem>
-                                <MenuItem
-                                  style={{
-                                    fontFamily: "Annie Use Your Telescope"
-                                  }}
-                                  value={"Annie Use Your Telescope"}
-                                >
-                                  Annie Use Your Telescope
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Arizonia" }}
-                                  value={"Arizonia"}
-                                >
-                                  Arizonia
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Astloch" }}
-                                  value={"Astloch"}
-                                >
-                                  Astloch
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Atomic Age" }}
-                                  value={"Atomic Age"}
-                                >
-                                  Atomic Age
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Barriecito" }}
-                                  value={"Barriecito"}
-                                >
-                                  Barriecito
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Barrio" }}
-                                  value={"Barrio"}
-                                >
-                                  Barrio
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Berkshire Swash" }}
-                                  value={"Berkshire Swash"}
-                                >
-                                  Berkshire Swash
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Beth Ellen" }}
-                                  value={"Beth Ellen"}
-                                >
-                                  Beth Ellen
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Bigelow Rules" }}
-                                  value={"Bigelow Rules"}
-                                >
-                                  Bigelow Rules
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Bonbon" }}
-                                  value={"Bonbon"}
-                                >
-                                  Bonbon
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Bungee Outline" }}
-                                  value={"Bungee Outline"}
-                                >
-                                  Bungee Outline
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Bungee Shade" }}
-                                  value={"Bungee Shade"}
-                                >
-                                  Bungee Shade
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Butcherman" }}
-                                  value={"Butcherman"}
-                                >
-                                  Butcherman
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Butterfly Kids" }}
-                                  value={"Butterfly Kids"}
-                                >
-                                  Butterfly Kids
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Calligraffitti" }}
-                                  value={"Calligraffitti"}
-                                >
-                                  Calligraffitti
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Caveat" }}
-                                  value={"Caveat"}
-                                >
-                                  Caveat
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Clicker Script" }}
-                                  value={"Clicker Script"}
-                                >
-                                  Clicker Script
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Codystar" }}
-                                  value={"Codystar"}
-                                >
-                                  Codystar
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Condiment" }}
-                                  value={"Condiment"}
-                                >
-                                  Condiment
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Creepster" }}
-                                  value={"Creepster"}
-                                >
-                                  Creepster
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Dawning of a New Day" }}
-                                  value={"Dawning of a New Day"}
-                                >
-                                  Dawning of a New Day
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Eater" }}
-                                  value={"Eater"}
-                                >
-                                  Eater
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Engagement" }}
-                                  value={"Engagement"}
-                                >
-                                  Engagement
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Ewert" }}
-                                  value={"Ewert"}
-                                >
-                                  Ewert
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Faster One" }}
-                                  value={"Faster One"}
-                                >
-                                  Faster One
-                                </MenuItem>
-                                <MenuItem
-                                  style={{ fontFamily: "Finger Paint" }}
-                                  value={"Finger Paint"}
-                                >
-                                  Finger Paint
-                                </MenuItem>
-                              </Select>
-                            </FormControl>
-                          </div>
-                        </div>
-
-                        <div style={{ display: "flex" }}>
-                          <div
-                            className="RightSideBar2__Btn"
-                            style={{ width: "50%" }}
-                          >
-                            <InputBase
-                              size="small"
-                              placeholder="Font Size"
-                              type="number"
-                              value={fontSize}
-                              // value={textelements[id].fontSize}
-                              style={{ color: "#fff" }}
-                              onChange={(e) => {
-                                setFSize(e.target.value);
-                                const sheeps = textelements;
-                                sheeps[id] = {
-                                  ...sheeps[id],
-                                  fontSize: e.target.value
-                                };
-                                settextelements(textelements);
-                              }}
-                            />
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <AspectRatioIcon className="RightSideBar2__Btn__icon" />
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              &nbsp;Lock Ratio{" "}
-                            </h2>{" "}
-                          </div>
-                        </div>
-                        <div style={{ display: "flex" }}>
-                          <div
-                            onClick={() => {
-                              setIsBold(!isBold);
-                              const sheeps = textelements;
-                              sheeps[id] = {
-                                ...sheeps[id],
-                                isBold: !sheeps[id].isBold
-                              };
-                              settextelements(textelements);
-                            }}
-                            style={{ padding: "10px 10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatBoldIcon className="RightSideBar2__Btn__icon" />
-                          </div>
-                          <div
-                            onClick={() => {
-                              setIsItalic(!isItalic);
-                              // console.log("italic clicked", id);
-                              const sheeps = textelements;
-                              sheeps[id] = {
-                                ...sheeps[id],
-                                isItalic: !sheeps[id].isItalic
-                              };
-                              settextelements(textelements);
-                            }}
-                            style={{ padding: "10px 10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatItalicIcon className="RightSideBar2__Btn__icon" />
-                          </div>
-                          <div
-                            onClick={() => {
-                              setIsUnderLine(!isUnderLine);
-                              // console.log("underline clicked", color);
-                              const sheeps = textelements;
-                              sheeps[id] = {
-                                ...sheeps[id],
-                                isUnderLine: !sheeps[id].isUnderLine
-                              };
-                              settextelements(textelements);
-                            }}
-                            style={{ padding: "10px 10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatUnderlinedIcon className="RightSideBar2__Btn__icon" />
-                          </div>
-                          <div
-                            onClick={() => {
-                              setAlignment("left");
-                              // console.log("underline clicked", color);
-                              const sheeps = textelements;
-                              sheeps[id] = {
-                                ...sheeps[id],
-                                alignment: sheeps[id].alignment
-                              };
-                              settextelements(textelements);
-                              // console.log(alignment);
-                            }}
-                            style={{ padding: "10px 10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatAlignLeftIcon className="RightSideBar2__Btn__icon" />
-                          </div>
-                          <div
-                            onClick={() => {
-                              setAlignment("center");
-                              // console.log("underline clicked", color);
-                              const sheeps = textelements;
-                              sheeps[id] = {
-                                ...sheeps[id],
-                                alignment: sheeps[id].alignment
-                              };
-                              settextelements(textelements);
-                              // console.log(alignment);
-                            }}
-                            style={{ padding: "10px 10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatAlignCenterIcon className="RightSideBar2__Btn__icon" />
-                          </div>
-                          <div
-                            onClick={() => {
-                              setAlignment("right");
-                              // console.log("underline clicked", color);
-                              const sheeps = textelements;
-                              sheeps[id] = {
-                                ...sheeps[id],
-                                alignment: sheeps[id].alignment
-                              };
-                              settextelements(textelements);
-                              // console.log(alignment);
-                            }}
-                            style={{ padding: "10px 10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatAlignRightIcon className="RightSideBar2__Btn__icon" />
-                          </div>
-                        </div>
-                        <p className="RightSideBar2__Text">TEXT COLOR</p>
-
-                        <input
-                          type="color"
-                          id="TextColor"
-                          initialValue="null"
-                          value={color.hex}
-                          onChange={(e) => {
-                            setColor(e.target.value);
-                            const sheeps = textelements;
-                            sheeps[id] = {
-                              ...sheeps[id],
-                              color: e.target.value
-                            };
-                            settextelements(textelements);
-                          }}
-                          placement="right"
-                          autoAdjust="true"
-                          style={{
-                            margin: "auto",
-                            visibility: "hidden",
-                            position: "relative",
-                            display: "flex",
-                            height: "5px"
-                          }}
-                        />
-                        <label htmlFor="TextColor">
-                          <div
-                            style={{ marginTop: "10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatColorTextIcon className="RightSideBar2__Btn__icon" />
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              &nbsp; Text Color{" "}
-                            </h2>{" "}
-                          </div>
-                        </label>
-                        <p className="RightSideBar2__Text">TEXT OUTLINE</p>
-                        <input
-                          type="color"
-                          id="OutlineColor"
-                          initialValue="null"
-                          value={color.hex}
-                          onChange={(e) => {
-                            setOutlineColor(e.target.value);
-                            const sheeps = textelements;
-                            sheeps[id] = {
-                              ...sheeps[id],
-                              outlineColor: e.target.value
-                            };
-                            settextelements(textelements);
-                            // console.log(outlineColor);
-                          }}
-                          placement="right"
-                          autoAdjust="true"
-                          style={{
-                            margin: "auto",
-                            visibility: "hidden",
-                            position: "relative",
-                            display: "flex",
-                            height: "5px"
-                          }}
-                        />
-                        <label htmlFor="OutlineColor">
-                          <div
-                            style={{ marginTop: "10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <ColorizeOutlinedIcon className="RightSideBar2__Btn__icon" />
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              &nbsp; Outline Color{" "}
-                            </h2>{" "}
-                          </div>
-                        </label>
-                        <p className="RightSideBar2__Text">
-                          TEXT BACKGROUND COLOR
-                        </p>
-                        <input
-                          type="color"
-                          id="BackgroundColor"
-                          initialValue="null"
-                          value={color.hex}
-                          onChange={(e) => {
-                            setBackgroundColor(e.target.value);
-                            const sheeps = textelements;
-                            sheeps[id] = {
-                              ...sheeps[id],
-                              backgroundColor: e.target.value
-                            };
-                            settextelements(textelements);
-                          }}
-                          placement="right"
-                          autoAdjust="true"
-                          style={{
-                            margin: "auto",
-                            visibility: "hidden",
-                            position: "relative",
-                            display: "flex",
-                            height: "5px"
-                          }}
-                        />
-                        <label htmlFor="BackgroundColor">
-                          <div
-                            style={{ marginTop: "10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatColorFillIcon className="RightSideBar2__Btn__icon" />
-                            <h2 className="RightSideBar2__Btn__title">
-                              &nbsp; Background Color{" "}
-                            </h2>{" "}
-                          </div>
-                        </label>
-                        <div style={{ display: "flex" }}>
-                          <div
-                            onClick={() => {
-                              setShowText(false);
-                              setisDisplay(!isdisplay);
-                              const sheeps = textelements;
-                              sheeps[id] = {
-                                ...sheeps[id],
-                                isdisplay: !sheeps[id].isdisplay
-                              };
-                              settextelements(textelements);
-                              setId(-1);
-                            }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <DeleteForever className="RightSideBar2__Btn__icon" />
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              &nbsp;Delete{" "}
-                            </h2>{" "}
-                          </div>
-                        </div>
-                      </TabPanel>
-                      <TabPanel
-                        value={RBar2value}
-                        index={1}
-                        dir={RBar2theme.direction}
+                        Alex Brush
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Alex Brush" }}
+                        value={"Alex Brush"}
                       >
-                        {" "}
-                        <p className="RightSideBar2__Text">
-                          Image Border COLOR
-                        </p>
-                        <input
-                          type="color"
-                          id="ImgBorderColor"
-                          // initialValue="transparent"
-                          value={color.hex}
-                          onChange={(e) => {
-                            setBordCol(e.target.value);
-                            const goats = secImgElements;
-                            goats[secImgEditId] = {
-                              ...goats[secImgEditId],
-                              borderColor: e.target.value
-                            };
-                            setSecImgElements(secImgElements);
-                          }}
-                          placement="right"
-                          autoAdjust="true"
-                          style={{
-                            margin: "auto",
-                            visibility: "hidden",
-                            position: "relative",
-                            display: "flex",
-                            height: "5px"
-                          }}
-                        />
-                        <label htmlFor="ImgBorderColor">
-                          <div
-                            style={{ marginTop: "10px" }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <FormatColorFillIcon className="RightSideBar2__Btn__icon" />
-                            <h2 className="RightSideBar2__Btn__title">
-                              &nbsp; Border Color{" "}
-                            </h2>{" "}
-                          </div>
-                        </label>
-                        {/* <Typography
+                        Akronim
+                      </MenuItem>
+
+                      <MenuItem
+                        style={{ fontFamily: "Allura" }}
+                        value={"Allura"}
+                      >
+                        Allura
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Almendra Display" }}
+                        value={"Almendra Display"}
+                      >
+                        Almendra Display
+                      </MenuItem>
+                      <MenuItem
+                        style={{
+                          fontFamily: "Annie Use Your Telescope"
+                        }}
+                        value={"Annie Use Your Telescope"}
+                      >
+                        Annie Use Your Telescope
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Arizonia" }}
+                        value={"Arizonia"}
+                      >
+                        Arizonia
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Astloch" }}
+                        value={"Astloch"}
+                      >
+                        Astloch
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Atomic Age" }}
+                        value={"Atomic Age"}
+                      >
+                        Atomic Age
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Barriecito" }}
+                        value={"Barriecito"}
+                      >
+                        Barriecito
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Barrio" }}
+                        value={"Barrio"}
+                      >
+                        Barrio
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Berkshire Swash" }}
+                        value={"Berkshire Swash"}
+                      >
+                        Berkshire Swash
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Beth Ellen" }}
+                        value={"Beth Ellen"}
+                      >
+                        Beth Ellen
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Bigelow Rules" }}
+                        value={"Bigelow Rules"}
+                      >
+                        Bigelow Rules
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Bonbon" }}
+                        value={"Bonbon"}
+                      >
+                        Bonbon
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Bungee Outline" }}
+                        value={"Bungee Outline"}
+                      >
+                        Bungee Outline
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Bungee Shade" }}
+                        value={"Bungee Shade"}
+                      >
+                        Bungee Shade
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Butcherman" }}
+                        value={"Butcherman"}
+                      >
+                        Butcherman
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Butterfly Kids" }}
+                        value={"Butterfly Kids"}
+                      >
+                        Butterfly Kids
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Calligraffitti" }}
+                        value={"Calligraffitti"}
+                      >
+                        Calligraffitti
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Caveat" }}
+                        value={"Caveat"}
+                      >
+                        Caveat
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Clicker Script" }}
+                        value={"Clicker Script"}
+                      >
+                        Clicker Script
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Codystar" }}
+                        value={"Codystar"}
+                      >
+                        Codystar
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Condiment" }}
+                        value={"Condiment"}
+                      >
+                        Condiment
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Creepster" }}
+                        value={"Creepster"}
+                      >
+                        Creepster
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Dawning of a New Day" }}
+                        value={"Dawning of a New Day"}
+                      >
+                        Dawning of a New Day
+                      </MenuItem>
+                      <MenuItem style={{ fontFamily: "Eater" }} value={"Eater"}>
+                        Eater
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Engagement" }}
+                        value={"Engagement"}
+                      >
+                        Engagement
+                      </MenuItem>
+                      <MenuItem style={{ fontFamily: "Ewert" }} value={"Ewert"}>
+                        Ewert
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Faster One" }}
+                        value={"Faster One"}
+                      >
+                        Faster One
+                      </MenuItem>
+                      <MenuItem
+                        style={{ fontFamily: "Finger Paint" }}
+                        value={"Finger Paint"}
+                      >
+                        Finger Paint
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+
+              <div style={{ display: "flex" }}>
+                <div className="RightSideBar2__Btn" style={{ width: "50%" }}>
+                  <InputBase
+                    size="small"
+                    placeholder="Font Size"
+                    type="number"
+                    // value={fontSize}
+                    value={textelements[id].fontSize}
+                    style={{ color: "#fff" }}
+                    onChange={(e) => {
+                      setFSize(e.target.value);
+                      const sheeps = textelements;
+                      sheeps[id] = {
+                        ...sheeps[id],
+                        fontSize: e.target.value
+                      };
+                      settextelements(textelements);
+                    }}
+                  />
+                </div>
+                <div className="RightSideBar2__Btn">
+                  <AspectRatioIcon className="RightSideBar2__Btn__icon" />
+                  <h2 className="RightSideBar2__Btn__title">
+                    {" "}
+                    &nbsp;Lock Ratio{" "}
+                  </h2>{" "}
+                </div>
+              </div>
+              <div style={{ display: "flex" }}>
+                <div
+                  onClick={() => {
+                    setIsBold(!isBold);
+                    const sheeps = textelements;
+                    sheeps[id] = {
+                      ...sheeps[id],
+                      isBold: !sheeps[id].isBold
+                    };
+                    settextelements(textelements);
+                  }}
+                  style={{ padding: "10px 10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatBoldIcon className="RightSideBar2__Btn__icon" />
+                </div>
+                <div
+                  onClick={() => {
+                    setIsItalic(!isItalic);
+                    // console.log("italic clicked", id);
+                    const sheeps = textelements;
+                    sheeps[id] = {
+                      ...sheeps[id],
+                      isItalic: !sheeps[id].isItalic
+                    };
+                    settextelements(textelements);
+                  }}
+                  style={{ padding: "10px 10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatItalicIcon className="RightSideBar2__Btn__icon" />
+                </div>
+                <div
+                  onClick={() => {
+                    setIsUnderLine(!isUnderLine);
+                    // console.log("underline clicked", color);
+                    const sheeps = textelements;
+                    sheeps[id] = {
+                      ...sheeps[id],
+                      isUnderLine: !sheeps[id].isUnderLine
+                    };
+                    settextelements(textelements);
+                  }}
+                  style={{ padding: "10px 10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatUnderlinedIcon className="RightSideBar2__Btn__icon" />
+                </div>
+                <div
+                  onClick={() => {
+                    setAlignment("left");
+                    // console.log("underline clicked", color);
+                    const sheeps = textelements;
+                    sheeps[id] = {
+                      ...sheeps[id],
+                      alignment: sheeps[id].alignment
+                    };
+                    settextelements(textelements);
+                    // console.log(alignment);
+                  }}
+                  style={{ padding: "10px 10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatAlignLeftIcon className="RightSideBar2__Btn__icon" />
+                </div>
+                <div
+                  onClick={() => {
+                    setAlignment("center");
+                    // console.log("underline clicked", color);
+                    const sheeps = textelements;
+                    sheeps[id] = {
+                      ...sheeps[id],
+                      alignment: sheeps[id].alignment
+                    };
+                    settextelements(textelements);
+                    // console.log(alignment);
+                  }}
+                  style={{ padding: "10px 10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatAlignCenterIcon className="RightSideBar2__Btn__icon" />
+                </div>
+                <div
+                  onClick={() => {
+                    setAlignment("right");
+                    // console.log("underline clicked", color);
+                    const sheeps = textelements;
+                    sheeps[id] = {
+                      ...sheeps[id],
+                      alignment: sheeps[id].alignment
+                    };
+                    settextelements(textelements);
+                    // console.log(alignment);
+                  }}
+                  style={{ padding: "10px 10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatAlignRightIcon className="RightSideBar2__Btn__icon" />
+                </div>
+              </div>
+              <p className="RightSideBar2__Text">TEXT COLOR</p>
+
+              <input
+                type="color"
+                id="TextColor"
+                initialValue="null"
+                value={color.hex}
+                onChange={(e) => {
+                  setColor(e.target.value);
+                  const sheeps = textelements;
+                  sheeps[id] = {
+                    ...sheeps[id],
+                    color: e.target.value
+                  };
+                  settextelements(textelements);
+                }}
+                placement="right"
+                autoAdjust="true"
+                style={{
+                  margin: "auto",
+                  visibility: "hidden",
+                  position: "relative",
+                  display: "flex",
+                  height: "5px"
+                }}
+              />
+              <label htmlFor="TextColor">
+                <div
+                  style={{ marginTop: "10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatColorTextIcon className="RightSideBar2__Btn__icon" />
+                  <h2 className="RightSideBar2__Btn__title">
+                    {" "}
+                    &nbsp; Text Color{" "}
+                  </h2>{" "}
+                </div>
+              </label>
+              <p className="RightSideBar2__Text">TEXT OUTLINE</p>
+              <input
+                type="color"
+                id="OutlineColor"
+                initialValue="null"
+                value={color.hex}
+                onChange={(e) => {
+                  setOutlineColor(e.target.value);
+                  const sheeps = textelements;
+                  sheeps[id] = {
+                    ...sheeps[id],
+                    outlineColor: e.target.value
+                  };
+                  settextelements(textelements);
+                  // console.log(outlineColor);
+                }}
+                placement="right"
+                autoAdjust="true"
+                style={{
+                  margin: "auto",
+                  visibility: "hidden",
+                  position: "relative",
+                  display: "flex",
+                  height: "5px"
+                }}
+              />
+              <label htmlFor="OutlineColor">
+                <div
+                  style={{ marginTop: "10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <ColorizeOutlinedIcon className="RightSideBar2__Btn__icon" />
+                  <h2 className="RightSideBar2__Btn__title">
+                    {" "}
+                    &nbsp; Outline Color{" "}
+                  </h2>{" "}
+                </div>
+              </label>
+              <p className="RightSideBar2__Text">TEXT BACKGROUND COLOR</p>
+              <input
+                type="color"
+                id="BackgroundColor"
+                initialValue="null"
+                value={color.hex}
+                onChange={(e) => {
+                  setBackgroundColor(e.target.value);
+                  const sheeps = textelements;
+                  sheeps[id] = {
+                    ...sheeps[id],
+                    backgroundColor: e.target.value
+                  };
+                  settextelements(textelements);
+                }}
+                placement="right"
+                autoAdjust="true"
+                style={{
+                  margin: "auto",
+                  visibility: "hidden",
+                  position: "relative",
+                  display: "flex",
+                  height: "5px"
+                }}
+              />
+              <label htmlFor="BackgroundColor">
+                <div
+                  style={{ marginTop: "10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatColorFillIcon className="RightSideBar2__Btn__icon" />
+                  <h2 className="RightSideBar2__Btn__title">
+                    &nbsp; Background Color{" "}
+                  </h2>{" "}
+                </div>
+              </label>
+              <div style={{ display: "flex" }}>
+                <div
+                  onClick={() => {
+                    setisDisplay(!isdisplay);
+                    const sheeps = textelements;
+                    sheeps[id] = {
+                      ...sheeps[id],
+                      isdisplay: !sheeps[id].isdisplay
+                    };
+                    settextelements(textelements);
+                    setId(-1);
+                  }}
+                  className="RightSideBar2__Btn"
+                >
+                  <DeleteForever className="RightSideBar2__Btn__icon" />
+                  <h2 className="RightSideBar2__Btn__title">
+                    {" "}
+                    &nbsp;Delete{" "}
+                  </h2>{" "}
+                </div>
+              </div>
+            </div>
+          ) : rightMenu === 3 ? (
+            <div className="RightSideBar2">
+              <p className="RightSideBar2__Text">Image Border COLOR</p>
+              <input
+                type="color"
+                id="ImgBorderColor"
+                // initialValue="transparent"
+                value={color.hex}
+                onChange={(e) => {
+                  setBordCol(e.target.value);
+                  const goats = secImgElements;
+                  goats[secImgEditId] = {
+                    ...goats[secImgEditId],
+                    borderColor: e.target.value
+                  };
+                  setSecImgElements(secImgElements);
+                }}
+                placement="right"
+                autoAdjust="true"
+                style={{
+                  margin: "auto",
+                  visibility: "hidden",
+                  position: "relative",
+                  display: "flex",
+                  height: "5px"
+                }}
+              />
+              <label htmlFor="ImgBorderColor">
+                <div
+                  style={{ marginTop: "10px" }}
+                  className="RightSideBar2__Btn"
+                >
+                  <FormatColorFillIcon className="RightSideBar2__Btn__icon" />
+                  <h2 className="RightSideBar2__Btn__title">
+                    &nbsp; Border Color{" "}
+                  </h2>{" "}
+                </div>
+              </label>
+              {/* <Typography
                           id="continuous-slider-Width"
                           className="RightSideBar2__Text"
                           gutterBottom
@@ -1221,65 +1050,65 @@ function Header() {
                             </Grid>
                           </Grid>
                         </div> */}
-                        <br />
-                        <hr />
-                        <br />
-                        <h3>EFFECTS</h3>
-                        <Typography
-                          id="continuous-slider-opacity"
-                          className="RightSideBar2__Text"
-                          gutterBottom
-                        >
-                          Opacity
-                        </Typography>
-                        <div style={{ width: "90%", marginLeft: "12px" }}>
-                          <Grid container spacing={2}>
-                            <Grid item xs>
-                              <Slider
-                                value={opacity * 100}
-                                onChange={(e, v) => {
-                                  // setBordCol(e.target.value);
-                                  setImgOpacity(v / 100);
-                                  const goats = secImgElements;
-                                  goats[secImgEditId] = {
-                                    ...goats[secImgEditId],
-                                    opacity: v / 100
-                                  };
-                                  setSecImgElements(secImgElements);
-                                }}
-                                aria-labelledby="continuous-slider-opacity"
-                              />
-                            </Grid>
-                          </Grid>
-                        </div>
-                        {/* {JSON.stringify(opacity) / 100} */}
-                        <Typography
-                          id="continuous-slider-BorderRadius"
-                          className="RightSideBar2__Text"
-                          gutterBottom
-                        >
-                          Border Radius
-                        </Typography>
-                        <div style={{ width: "90%", marginLeft: "12px" }}>
-                          <Grid container spacing={2}>
-                            <Grid item xs>
-                              <Slider
-                                value={borderRadius}
-                                onChange={(e, v) => {
-                                  setImgborderRadius(v);
-                                  const goats = secImgElements;
-                                  goats[secImgEditId] = {
-                                    ...goats[secImgEditId],
-                                    borderRadius: v
-                                  };
-                                  setSecImgElements(secImgElements);
-                                }}
-                                aria-labelledby="continuous-slider-BorderRadius"
-                              />
-                            </Grid>
-                          </Grid>
-                        </div>
-                        {/* <Typography
+              <br />
+              <hr />
+              <br />
+              <h3>EFFECTS</h3>
+              <Typography
+                id="continuous-slider-opacity"
+                className="RightSideBar2__Text"
+                gutterBottom
+              >
+                Opacity
+              </Typography>
+              <div style={{ width: "90%", marginLeft: "12px" }}>
+                <Grid container spacing={2}>
+                  <Grid item xs>
+                    <Slider
+                      // value={secImgElements[secImgEditId].opacity}
+                      value={opacity * 100}
+                      onChange={(e, v) => {
+                        setImgOpacity(v / 100);
+                        const goats = secImgElements;
+                        goats[secImgEditId] = {
+                          ...goats[secImgEditId],
+                          opacity: v / 100
+                        };
+                        setSecImgElements(secImgElements);
+                      }}
+                      aria-labelledby="continuous-slider-opacity"
+                    />
+                  </Grid>
+                </Grid>
+              </div>
+              {/* {JSON.stringify(opacity) / 100} */}
+              <Typography
+                id="continuous-slider-BorderRadius"
+                className="RightSideBar2__Text"
+                gutterBottom
+              >
+                Border Radius
+              </Typography>
+              <div style={{ width: "90%", marginLeft: "12px" }}>
+                <Grid container spacing={2}>
+                  <Grid item xs>
+                    <Slider
+                      value={borderRadius}
+                      onChange={(e, v) => {
+                        setImgborderRadius(v);
+                        const goats = secImgElements;
+                        goats[secImgEditId] = {
+                          ...goats[secImgEditId],
+                          borderRadius: v
+                        };
+                        setSecImgElements(secImgElements);
+                      }}
+                      aria-labelledby="continuous-slider-BorderRadius"
+                    />
+                  </Grid>
+                </Grid>
+              </div>
+              {/* <Typography
                           id="continuous-slider-Blur"
                           className="RightSideBar2__Text"
                           gutterBottom
@@ -1306,8 +1135,8 @@ function Header() {
                             </Grid>
                           </Grid>
                         </div> */}
-                        {/* {JSON.stringify(opacity) / 100} */}
-                        {/* <Typography
+              {/* {JSON.stringify(opacity) / 100} */}
+              {/* <Typography
                           id="continuous-slider-Contrast"
                           className="RightSideBar2__Text"
                           gutterBottom
@@ -1333,33 +1162,33 @@ function Header() {
                             </Grid>
                           </Grid>
                         </div> */}
-                        <Typography
-                          id="continuous-slider-Grayscale"
-                          className="RightSideBar2__Text"
-                          gutterBottom
-                        >
-                          Grayscale
-                        </Typography>
-                        <div style={{ width: "90%", marginLeft: "12px" }}>
-                          <Grid container spacing={2}>
-                            <Grid item xs>
-                              <Slider
-                                value={grayscale * 100}
-                                onChange={(e, v) => {
-                                  setImgGrayscale(v / 100);
-                                  const goats = secImgElements;
-                                  goats[secImgEditId] = {
-                                    ...goats[secImgEditId],
-                                    grayscale: v / 100
-                                  };
-                                  setSecImgElements(secImgElements);
-                                }}
-                                aria-labelledby="continuous-slider-Grayscale"
-                              />
-                            </Grid>
-                          </Grid>
-                        </div>
-                        {/* <Typography
+              <Typography
+                id="continuous-slider-Grayscale"
+                className="RightSideBar2__Text"
+                gutterBottom
+              >
+                Grayscale
+              </Typography>
+              <div style={{ width: "90%", marginLeft: "12px" }}>
+                <Grid container spacing={2}>
+                  <Grid item xs>
+                    <Slider
+                      value={grayscale * 100}
+                      onChange={(e, v) => {
+                        setImgGrayscale(v / 100);
+                        const goats = secImgElements;
+                        goats[secImgEditId] = {
+                          ...goats[secImgEditId],
+                          grayscale: v / 100
+                        };
+                        setSecImgElements(secImgElements);
+                      }}
+                      aria-labelledby="continuous-slider-Grayscale"
+                    />
+                  </Grid>
+                </Grid>
+              </div>
+              {/* <Typography
                           id="continuous-slider-Invert"
                           className="RightSideBar2__Text"
                           gutterBottom
@@ -1385,142 +1214,33 @@ function Header() {
                             </Grid>
                           </Grid>
                         </div> */}
-                        <div style={{ display: "flex" }}>
-                          <div
-                            onClick={() => {
-                              setShowText(false);
-                              setIsImgdisplay(!isImgdisplay);
-                              const goats = secImgElements;
-                              goats[secImgEditId] = {
-                                ...goats[secImgEditId],
-                                isImgdisplay: !goats[secImgEditId].isImgdisplay
-                              };
-                              setSecImgElements(secImgElements);
-                              setSecImgEditId(-1);
-                            }}
-                            className="RightSideBar2__Btn"
-                          >
-                            <DeleteForever className="RightSideBar2__Btn__icon" />
-                            <h2
-                              style={{ width: "100%" }}
-                              className="RightSideBar2__Btn__title"
-                            >
-                              {" "}
-                              &nbsp;Delete{" "}
-                            </h2>{" "}
-                          </div>
-                        </div>
-                      </TabPanel>
-                      <TabPanel
-                        value={RBar2value}
-                        index={2}
-                        dir={RBar2theme.direction}
-                      >
-                        <p className="RightSideBar2__Text">ANIMATION</p>
-                        <div style={{ display: "flex" }}>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title"> None</h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              DropIn
-                            </h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              Flicker
-                            </h2>
-                          </div>
-                        </div>
-                        <div style={{ display: "flex" }}>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title"> Fade</h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              Vibrate
-                            </h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">
-                              Reveal
-                            </h2>
-                          </div>
-                        </div>
-                        <div style={{ display: "flex" }}>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">Wipe </h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              SlideUp
-                            </h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">
-                              PopIn{" "}
-                            </h2>
-                          </div>
-                        </div>
-                        <p className="RightSideBar2__Text">ANIMATION SPEED</p>
-                        <div style={{ display: "flex" }}>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">Slow </h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">
-                              {" "}
-                              Default
-                            </h2>
-                          </div>
-                          <div className="RightSideBar2__Btn">
-                            <h2 className="RightSideBar2__Btn__title">Fast </h2>
-                          </div>
-                        </div>
-                      </TabPanel>
-                    </SwipeableViews>
-                  </div>
+              <div style={{ display: "flex" }}>
+                <div
+                  onClick={() => {
+                    setShowText(false);
+                    setIsImgdisplay(!isImgdisplay);
+                    const goats = secImgElements;
+                    goats[secImgEditId] = {
+                      ...goats[secImgEditId],
+                      isImgdisplay: !goats[secImgEditId].isImgdisplay
+                    };
+                    setSecImgElements(secImgElements);
+                    setSecImgEditId(-1);
+                  }}
+                  className="RightSideBar2__Btn"
+                >
+                  <DeleteForever className="RightSideBar2__Btn__icon" />
+                  <h2
+                    style={{ width: "100%" }}
+                    className="RightSideBar2__Btn__title"
+                  >
+                    {" "}
+                    &nbsp;Delete{" "}
+                  </h2>{" "}
                 </div>
               </div>
-            ) : (
-              <div className="RightSideBar1">
-                {/* Aspect Ratio */}
-                <p className="RightSideBar1__Text">OUTPUT SIZE</p>
-                <div className="RightSideBar1Btns">
-                  <Btn selected title="1:1" />
-                  <Btn title="9:16" />
-                  <Btn title="16:9" />
-                  <Btn title="4:5" />
-                  <Btn title="5:4" />
-                </div>
-                <div className="RightSideBar1Btns">
-                  <Btn title="Custom Size" />
-                </div>
-
-                {/* <p className="RightSideBar1__Text">EXPAND PADDING</p>
-                <div className="RightSideBar1__Padding">
-                  <HeaderBtn Icon={BorderTopIcon} title="Top" />
-                  <HeaderBtn Icon={BorderBottomIcon} title="Bottom" />
-                </div>
-                <div className="RightSideBar1__Padding">
-                  <HeaderBtn Icon={BorderLeftIcon} title="Left" />
-                  <HeaderBtn Icon={BorderRightIcon} title="Right" />
-                </div>
-                <div className="RightSideBar1__Padding">
-                  <HeaderBtn Icon={BorderClearIcon} title="Remove Padding" />
-                </div>
-             
-                <p className="RightSideBar1__Text">BACKGROUND COLOR</p>
-                <div className="RightSideBar1__Color">
-                  <HeaderBtn Icon={ColorizeIcon} title="Color" />
-                </div> */}
-              </div>
-            )}
-          </CustomScroll>
+            </div>
+          ) : null}
         </div>
       </div>
       <div style={{ backgroundColor: "#191e2b", height: "3.9vh" }}></div>

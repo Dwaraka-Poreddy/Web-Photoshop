@@ -92,10 +92,10 @@
 
 /* RightSideBar2 Css */
 .RightSideBar2 {
-  flex: 0.225;
+  flex: 0.22;
   background-color: #252935;
-  padding: 0 5px 0 5px;
-  height: 83vh;
+  padding: 10px 10px;
+  height: 82.7vh;
   /* overflow-y: auto;
   overflow-x: auto; */
 }
