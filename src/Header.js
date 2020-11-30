@@ -20,7 +20,7 @@ import InputColor, { Color } from "react-input-color";
 import Slider from "@material-ui/core/Slider";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-
+import { Link } from "react-router-dom";
 //imports for leftbar
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -268,7 +268,9 @@ function Header() {
         <div className="header">
           <div className="header__left">
             <Avatar className="header__logo" alt="logo" src="" />
-            <p className="header__leftStepper">Horizantal Stepper</p>
+            <Link to="/">
+              <Btn className="header__leftStepper" title="Main page" />
+            </Link>
           </div>
 
           <p>GiftCard Generator</p>
@@ -1217,7 +1219,6 @@ function Header() {
               <div style={{ display: "flex" }}>
                 <div
                   onClick={() => {
-                    setShowText(false);
                     setIsImgdisplay(!isImgdisplay);
                     const goats = secImgElements;
                     goats[secImgEditId] = {
