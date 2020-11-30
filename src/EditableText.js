@@ -316,16 +316,19 @@ const EditableInput = (props) => {
               }}
             />
           ) : (
-            <span
+            <div
               style={{
-                border: isMousedOver ? "1.25px dashed " : null
+                border: isMousedOver ? "2px dashed " : null
               }}
-              onMouseOver={() => handleMouseOver()}
-              onMouseOut={() => handleMouseOut()}
-              onClick={() => handleClick()}
             >
-              {text}
-            </span>
+              <span
+                onMouseOver={() => handleMouseOver()}
+                onMouseOut={() => handleMouseOut()}
+                onClick={() => handleClick()}
+              >
+                {text}
+              </span>
+            </div>
           )}
         </div>
       </div>
