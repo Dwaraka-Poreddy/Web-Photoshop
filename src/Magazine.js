@@ -14,12 +14,12 @@ import { makeStyles } from "@material-ui/core/styles";
 const secuseStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      margin: theme.spacing(0)
-    }
+      margin: theme.spacing(0),
+    },
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
 export default function App() {
@@ -49,7 +49,7 @@ export default function App() {
           <div className="header__left">
             <Link to="/">
               {/* <Avatar className="header__logo" alt="logo" src="" /> */}
-              <Btn className="header__leftStepper" title="Main page" />
+              <Btn className="header__leftStepper" title="Web PhotoShop" />
             </Link>
             <input
               accept="image/* "
@@ -67,7 +67,7 @@ export default function App() {
             </label>
           </div>
 
-          <p>GiftCard Generator</p>
+          {/* <p>Web Photoshop</p> */}
           <div style={{ display: "flex" }} className="header__right">
             <Btn
               handleClick={() => handleMemeDownlod(this)}
@@ -89,7 +89,7 @@ export default function App() {
               backgroundRepeat: "no-repeat",
               backgroundImage: "url(" + imgSource + ")",
               border: "20px solid #e90606",
-              marginBottom: "20px"
+              marginBottom: "20px",
             }}
           >
             <div style={{ textAlign: "right" }}>
@@ -98,7 +98,7 @@ export default function App() {
                 style={{
                   color: "#000",
                   marginTop: "-15px",
-                  fontWeight: "bold"
+                  fontWeight: "bold",
                 }}
               >
                 {date}
@@ -116,7 +116,7 @@ export default function App() {
                   textAlign: "left",
                   marginLeft: "2%",
                   marginTop: "90%",
-                  flex: 0.5
+                  flex: 0.5,
                 }}
               >
                 <h1
@@ -125,7 +125,7 @@ export default function App() {
 
                     fontSize: "40px",
                     fontFamily: "Roboto Slab",
-                    fontWeight: "600"
+                    fontWeight: "600",
                   }}
                 >
                   <EditableText text="THE" />
@@ -136,7 +136,7 @@ export default function App() {
                     marginTop: "2%",
                     fontSize: "40px",
                     fontFamily: "Roboto Slab",
-                    fontWeight: "600"
+                    fontWeight: "600",
                   }}
                 >
                   <EditableText text=" UNSTOPPABLE" />
@@ -150,7 +150,7 @@ export default function App() {
                   marginRight: "2%",
                   fontFamily: "sans-serif",
                   fontSize: "0.75em",
-                  flex: 0.5
+                  flex: 0.5,
                 }}
               >
                 <h1 style={{ color: "#e90606" }}>CRICKET</h1>

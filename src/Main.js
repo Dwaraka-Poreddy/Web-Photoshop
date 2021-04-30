@@ -17,11 +17,11 @@ export default function Main() {
         <div className="header">
           <div className="header__left">
             <Link to="/">
-              <Btn className="header__leftStepper" title="Main page" />
+              <Btn className="header__leftStepper" title="Web Photoshop" />
             </Link>
           </div>
 
-          <p>GiftCard Generator</p>
+          {/* <p>Web Photoshop</p> */}
         </div>
       </div>
       {/* /////////////////////// */}
@@ -33,12 +33,18 @@ export default function Main() {
           color: "white",
           textAlign: "center",
           fontSize: "60px",
-          fontWeight: "400"
+          fontWeight: "400",
         }}
       >
-        <h2 style={{ backgroundColor: "#191e2b", margin: "auto" }}>
+        <h2
+          style={{
+            backgroundColor: "#191e2b",
+            margin: "auto",
+            paddingTop: "10vh",
+          }}
+        >
           {" "}
-          Lorem Epsum{" "}
+          Web PhotoShop{" "}
         </h2>
       </div>
       <div className="cardcontainer">
@@ -54,10 +60,10 @@ export default function Main() {
               style={{
                 backgroundColor: "#191e2b",
                 margin: "auto",
-                color: "#fff"
+                color: "#fff",
               }}
             >
-              Greetings
+              Greeting Cards
             </h2>
           </Card>{" "}
         </Link>{" "}
@@ -72,7 +78,7 @@ export default function Main() {
               style={{
                 backgroundColor: "#191e2b",
                 margin: "auto",
-                color: "#fff"
+                color: "#fff",
               }}
             >
               News Paper
@@ -90,7 +96,7 @@ export default function Main() {
               style={{
                 backgroundColor: "#191e2b",
                 margin: "auto",
-                color: "#fff"
+                color: "#fff",
               }}
             >
               Magazine Cover

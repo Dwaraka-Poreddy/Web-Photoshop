@@ -73,22 +73,22 @@ const useFFamStyles = makeStyles((theme) => ({
   formControl: {
     // margin: theme.spacing(1),
     // minWidth: 100
-    width: "100%"
+    width: "100%",
   },
   selectEmpty: {
     // marginTop: theme.spacing(2)
-  }
+  },
 }));
 
 const secuseStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      margin: theme.spacing(1)
-    }
+      margin: theme.spacing(1),
+    },
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
 const useStylesinput = makeStyles((theme) => ({
@@ -96,9 +96,9 @@ const useStylesinput = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
       width: "12ch",
-      color: "#ffffff"
-    }
-  }
+      color: "#ffffff",
+    },
+  },
 }));
 
 const initialState = {
@@ -112,7 +112,7 @@ const initialState = {
   color: {},
   backgroundColor: {},
   outlineColor: {},
-  alignment: "justify"
+  alignment: "justify",
 };
 
 const imginitState = {
@@ -125,7 +125,7 @@ const imginitState = {
   blur: "0",
   contrast: "1",
   grayscale: "0",
-  invert: "0"
+  invert: "0",
 };
 
 function Header() {
@@ -202,7 +202,7 @@ function Header() {
     const goats = secImgElements;
     goats[secImgId] = {
       ...goats[secImgId],
-      ImgSource: e
+      ImgSource: e,
     };
     setSecImgId(secImgId + 1);
     setSecImgElements(secImgElements);
@@ -269,11 +269,11 @@ function Header() {
           <div className="header__left">
             <Avatar className="header__logo" alt="logo" src="" />
             <Link to="/">
-              <Btn className="header__leftStepper" title="Main page" />
+              <Btn className="header__leftStepper" title="Web Photoshop" />
             </Link>
           </div>
 
-          <p>GiftCard Generator</p>
+          {/* <p>Web PhotoShop</p> */}
           <div style={{ display: "flex" }} className="header__right">
             <TextField
               className={classesinput.root}
@@ -282,7 +282,7 @@ function Header() {
                 borderRadius: "5px",
                 marginRight: "10px",
                 height: "50px",
-                marginTop: "5px"
+                marginTop: "5px",
               }}
               color="primary"
               id="standard-basic"
@@ -356,7 +356,7 @@ function Header() {
               margin: "auto",
               alignText: "center",
               backgroundColor: "#252935",
-              padding: "5px"
+              padding: "5px",
             }}
           >
             Trending
@@ -371,7 +371,7 @@ function Header() {
                   marginTop: "10px",
                   maxWidth: "700px",
                   borderRight: "8px solid #252935",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
               >
                 <img
@@ -384,7 +384,7 @@ function Header() {
                     padding: "3px",
                     // height: "158px",
                     margin: "auto",
-                    border: "2px solid #5a5d68"
+                    border: "2px solid #5a5d68",
                   }}
                   src={item.src}
                   alt=""
@@ -403,7 +403,7 @@ function Header() {
                 component="div"
                 style={{
                   backgroundColor: "#cfe8fc",
-                  flex: "0.6"
+                  flex: "0.6",
                 }}
               >
                 <div
@@ -416,7 +416,7 @@ function Header() {
                     backgroundRepeat: "no-repeat",
                     height: "80vh",
                     maxWidth: "60vw",
-                    overflow: "hidden"
+                    overflow: "hidden",
                     // margin: "5vh auto"
                   }}
 
@@ -449,7 +449,7 @@ function Header() {
                       width: "100%",
                       position: "relative",
                       overflow: "hidden",
-                      padding: "0"
+                      padding: "0",
                     }}
                   >
                     {displayText()}
@@ -489,7 +489,7 @@ function Header() {
                     color: "#fff",
                     margin: "0",
                     backgroundColor: "#252935",
-                    width: "100%"
+                    width: "100%",
                   }}
                   value={title}
                   onChange={(e) => {
@@ -497,7 +497,7 @@ function Header() {
                     const sheeps = textelements;
                     sheeps[id] = {
                       ...sheeps[id],
-                      title: e.target.value
+                      title: e.target.value,
                     };
                     settextelements(textelements);
                   }}
@@ -507,7 +507,7 @@ function Header() {
                 style={{
                   display: "flex",
                   marginTop: "0",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               ></div>
               <p className="RightSideBar2__Text">FONT</p>
@@ -520,7 +520,7 @@ function Header() {
                         width: "90%",
                         paddingRight: "0",
                         fontFamily: textelements[id].fontFamily,
-                        color: "#fff"
+                        color: "#fff",
                       }}
                       // value={fontFamily}
                       value={textelements[id].fontFamily}
@@ -529,7 +529,7 @@ function Header() {
                         const sheeps = textelements;
                         sheeps[id] = {
                           ...sheeps[id],
-                          fontFamily: e.target.value
+                          fontFamily: e.target.value,
                         };
                         settextelements(textelements);
                       }}
@@ -570,7 +570,7 @@ function Header() {
                       </MenuItem>
                       <MenuItem
                         style={{
-                          fontFamily: "Annie Use Your Telescope"
+                          fontFamily: "Annie Use Your Telescope",
                         }}
                         value={"Annie Use Your Telescope"}
                       >
@@ -739,7 +739,7 @@ function Header() {
                       const sheeps = textelements;
                       sheeps[id] = {
                         ...sheeps[id],
-                        fontSize: e.target.value
+                        fontSize: e.target.value,
                       };
                       settextelements(textelements);
                     }}
@@ -760,7 +760,7 @@ function Header() {
                     const sheeps = textelements;
                     sheeps[id] = {
                       ...sheeps[id],
-                      isBold: !sheeps[id].isBold
+                      isBold: !sheeps[id].isBold,
                     };
                     settextelements(textelements);
                   }}
@@ -776,7 +776,7 @@ function Header() {
                     const sheeps = textelements;
                     sheeps[id] = {
                       ...sheeps[id],
-                      isItalic: !sheeps[id].isItalic
+                      isItalic: !sheeps[id].isItalic,
                     };
                     settextelements(textelements);
                   }}
@@ -792,7 +792,7 @@ function Header() {
                     const sheeps = textelements;
                     sheeps[id] = {
                       ...sheeps[id],
-                      isUnderLine: !sheeps[id].isUnderLine
+                      isUnderLine: !sheeps[id].isUnderLine,
                     };
                     settextelements(textelements);
                   }}
@@ -808,7 +808,7 @@ function Header() {
                     const sheeps = textelements;
                     sheeps[id] = {
                       ...sheeps[id],
-                      alignment: sheeps[id].alignment
+                      alignment: sheeps[id].alignment,
                     };
                     settextelements(textelements);
                     // console.log(alignment);
@@ -825,7 +825,7 @@ function Header() {
                     const sheeps = textelements;
                     sheeps[id] = {
                       ...sheeps[id],
-                      alignment: sheeps[id].alignment
+                      alignment: sheeps[id].alignment,
                     };
                     settextelements(textelements);
                     // console.log(alignment);
@@ -842,7 +842,7 @@ function Header() {
                     const sheeps = textelements;
                     sheeps[id] = {
                       ...sheeps[id],
-                      alignment: sheeps[id].alignment
+                      alignment: sheeps[id].alignment,
                     };
                     settextelements(textelements);
                     // console.log(alignment);
@@ -865,7 +865,7 @@ function Header() {
                   const sheeps = textelements;
                   sheeps[id] = {
                     ...sheeps[id],
-                    color: e.target.value
+                    color: e.target.value,
                   };
                   settextelements(textelements);
                 }}
@@ -876,7 +876,7 @@ function Header() {
                   visibility: "hidden",
                   position: "relative",
                   display: "flex",
-                  height: "5px"
+                  height: "5px",
                 }}
               />
               <label htmlFor="TextColor">
@@ -902,7 +902,7 @@ function Header() {
                   const sheeps = textelements;
                   sheeps[id] = {
                     ...sheeps[id],
-                    outlineColor: e.target.value
+                    outlineColor: e.target.value,
                   };
                   settextelements(textelements);
                   // console.log(outlineColor);
@@ -914,7 +914,7 @@ function Header() {
                   visibility: "hidden",
                   position: "relative",
                   display: "flex",
-                  height: "5px"
+                  height: "5px",
                 }}
               />
               <label htmlFor="OutlineColor">
@@ -940,7 +940,7 @@ function Header() {
                   const sheeps = textelements;
                   sheeps[id] = {
                     ...sheeps[id],
-                    backgroundColor: e.target.value
+                    backgroundColor: e.target.value,
                   };
                   settextelements(textelements);
                 }}
@@ -951,7 +951,7 @@ function Header() {
                   visibility: "hidden",
                   position: "relative",
                   display: "flex",
-                  height: "5px"
+                  height: "5px",
                 }}
               />
               <label htmlFor="BackgroundColor">
@@ -972,7 +972,7 @@ function Header() {
                     const sheeps = textelements;
                     sheeps[id] = {
                       ...sheeps[id],
-                      isdisplay: !sheeps[id].isdisplay
+                      isdisplay: !sheeps[id].isdisplay,
                     };
                     settextelements(textelements);
                     setId(-1);
@@ -1000,7 +1000,7 @@ function Header() {
                   const goats = secImgElements;
                   goats[secImgEditId] = {
                     ...goats[secImgEditId],
-                    borderColor: e.target.value
+                    borderColor: e.target.value,
                   };
                   setSecImgElements(secImgElements);
                 }}
@@ -1011,7 +1011,7 @@ function Header() {
                   visibility: "hidden",
                   position: "relative",
                   display: "flex",
-                  height: "5px"
+                  height: "5px",
                 }}
               />
               <label htmlFor="ImgBorderColor">
@@ -1074,7 +1074,7 @@ function Header() {
                         const goats = secImgElements;
                         goats[secImgEditId] = {
                           ...goats[secImgEditId],
-                          opacity: v / 100
+                          opacity: v / 100,
                         };
                         setSecImgElements(secImgElements);
                       }}
@@ -1101,7 +1101,7 @@ function Header() {
                         const goats = secImgElements;
                         goats[secImgEditId] = {
                           ...goats[secImgEditId],
-                          borderRadius: v
+                          borderRadius: v,
                         };
                         setSecImgElements(secImgElements);
                       }}
@@ -1181,7 +1181,7 @@ function Header() {
                         const goats = secImgElements;
                         goats[secImgEditId] = {
                           ...goats[secImgEditId],
-                          grayscale: v / 100
+                          grayscale: v / 100,
                         };
                         setSecImgElements(secImgElements);
                       }}
@@ -1223,7 +1223,7 @@ function Header() {
                     const goats = secImgElements;
                     goats[secImgEditId] = {
                       ...goats[secImgEditId],
-                      isImgdisplay: !goats[secImgEditId].isImgdisplay
+                      isImgdisplay: !goats[secImgEditId].isImgdisplay,
                     };
                     setSecImgElements(secImgElements);
                     setSecImgEditId(-1);

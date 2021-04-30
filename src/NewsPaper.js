@@ -12,12 +12,12 @@ import { makeStyles } from "@material-ui/core/styles";
 const secuseStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      margin: theme.spacing(0)
-    }
+      margin: theme.spacing(0),
+    },
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
 export default function App() {
@@ -45,11 +45,11 @@ export default function App() {
           <div className="header__left">
             <Link to="/">
               {/* <Avatar className="header__logo" alt="logo" src="" /> */}
-              <Btn className="header__leftStepper" title="Main page" />
+              <Btn className="header__leftStepper" title="Web Photoshop" />
             </Link>
           </div>
 
-          <p>GiftCard Generator</p>
+          {/* <p>Web PhotoShop</p> */}
           <div style={{ display: "flex" }} className="header__right">
             <Btn
               handleClick={() => handleMemeDownlod(this)}
@@ -67,7 +67,7 @@ export default function App() {
           <div>
             <img
               style={{
-                width: "100%"
+                width: "100%",
               }}
               src={require("../src/Images/Heading.png")}
               alt="Heading"
@@ -83,7 +83,7 @@ export default function App() {
               style={{
                 width: "50%",
                 textAlign: "center",
-                backgroundColor: "#ffffff"
+                backgroundColor: "#ffffff",
               }}
             >
               <div>
@@ -92,7 +92,7 @@ export default function App() {
                     fontSize: "4.8rem",
                     fontFamily: "oxford",
                     fontWeight: "400",
-                    margin: "5px"
+                    margin: "5px",
                   }}
                 >
                   <EditableText text=" World's Best Couple" />
@@ -116,7 +116,7 @@ export default function App() {
                     style={{
                       width: "100%",
                       maxHeight: "550px",
-                      border: isMousedOver ? "2px dashed " : null
+                      border: isMousedOver ? "2px dashed " : null,
                     }}
                     src={imgSource}
                     alt="MainImage"
